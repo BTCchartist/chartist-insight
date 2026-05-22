@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "key": "빗썸_COS",
+    "time": "2026-05-23 00:00",
+    "price": 1.676,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_FITFI",
+    "time": "2026-05-23 00:00",
+    "price": 0.824,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_LM",
+    "time": "2026-05-23 00:00",
+    "price": 1.324,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_XYO",
+    "time": "2026-05-23 00:00",
+    "price": 6.899,
+    "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_ALLO",
+    "time": "2026-05-23 00:00",
+    "price": 142.0,
+    "sig_type": "trend"
+  }
+]
