@@ -28,5 +28,23 @@
     "time": "2026-05-23 00:00",
     "price": 142.0,
     "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_BIOT",
+    "time": "2026-05-23 00:30",
+    "price": 0.5328,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_ALICE",
+    "time": "2026-05-23 00:30",
+    "price": 191.0,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_TEMCO",
+    "time": "2026-05-23 00:30",
+    "price": 0.9439,
+    "sig_type": "rsi"
   }
 ]
