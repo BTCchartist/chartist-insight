@@ -20,7 +20,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:var(--fs-base);min-height:100vh;padding:0 0 60px;}
-  body.large{--fs-base:16px;--fs-sm:13px;--fs-md:15px;--fs-lg:17px;--pad-input:11px 13px;--pad-section:22px;}
+  body.large{--fs-base:16px;--fs-sm:13px;--fs-md:15px;--fs-lg:17px;--pad-input:11px 13px;--pad-section:22px;zoom:1.15;}
   .container{max-width:640px;margin:0 auto;padding:0 16px;}
   .site-header{text-align:center;padding:20px 16px 12px;max-width:640px;margin:0 auto;}
   .site-header h1{font-size:20px;font-weight:700;color:var(--gold);letter-spacing:0.3px;margin-bottom:10px;}
@@ -300,7 +300,6 @@ var dateRange = null;
 var currentAltSort = 'time'; // name | price | change | time
 var currentAltSortDir = 'desc';
 var liveprices = {}; // ticker -> {price, change24h}
-var binanceWsMap = {}; // ticker -> ws
 var upbitPollTimer = null;
 
 // ── ① 글자크기 (전체 body 적용) ──
@@ -691,15 +690,10 @@ function renderAltcoin() {
     var sm = sigMap[item.sig] || {label: item.sig, cls: ''};
     var lp = liveprices[item.ticker];
     var dispPrice = lp ? fmtPrice(lp.price, item.exchange) : fmtPrice(item.sigPrice, item.exchange);
-    var changeHtml = '';
-    if (lp && lp.change24h !== null && lp.change24h !== undefined) {
-      var chg = lp.change24h;
-      var cls = chg > 0 ? 'up' : (chg < 0 ? 'dn' : 'flat');
-      var sign = chg > 0 ? '+' : '';
-      changeHtml = '<div class="ticker-change ' + cls + '">' + sign + chg.toFixed(2) + '%</div>';
-    } else {
-      changeHtml = '<div class="ticker-change flat">—</div>';
-    }
+    var chg24 = lp ? lp.change24h : null;
+    var chgCls = (chg24 > 0) ? 'up' : (chg24 < 0 ? 'dn' : 'flat');
+    var chgSign = chg24 > 0 ? '+' : '';
+    var chgTxt = (chg24 !== null && chg24 !== undefined) ? chgSign + chg24.toFixed(2) + '%' : '—';
     html += '<div class="ticker-item" id="ti-' + item.ticker + '-' + item.sig + '">' +
       '<div class="ticker-left">' +
       '<div class="ticker-name">' + (item.ticker || '—') +
@@ -708,7 +702,7 @@ function renderAltcoin() {
       '</div>' +
       '<div class="ticker-right">' +
       '<div class="ticker-price" id="lp-' + item.ticker + '">' + dispPrice + '</div>' +
-      changeHtml.replace('ticker-change', 'ticker-change" id="lc-' + item.ticker + '"') +
+      '<div class="ticker-change ' + chgCls + '" id="lc-' + item.ticker + '">' + chgTxt + '</div>' +
       '</div></div>';
   });
   html += '</div>';
@@ -753,26 +747,51 @@ function connectLivePrices(items) {
     binanceWsList.push(ws);
   }
 
-  // 업비트 REST 5초 폴링
+  // 업비트/빗썸 분리
+  var upbitTickers = [];
+  var bithumbTickers = [];
+  items.slice(0, 200).forEach(function(item) {
+    if (!item.ticker) return;
+    if (item.exchange === '업비트') {
+      if (upbitTickers.indexOf(item.ticker) === -1) upbitTickers.push(item.ticker);
+    } else if (item.exchange === '빗썸') {
+      if (bithumbTickers.indexOf(item.ticker) === -1) bithumbTickers.push(item.ticker);
+    }
+  });
+
   if (upbitPollTimer) clearInterval(upbitPollTimer);
-  upbitPollActive = krwTickers.slice();
-  if (upbitPollActive.length > 0) {
-    function pollUpbit() {
-      var markets = upbitPollActive.map(function(t) { return 'KRW-' + t; }).join(',');
+
+  function pollKrw() {
+    if (upbitTickers.length > 0) {
+      var markets = upbitTickers.map(function(t) { return 'KRW-' + t; }).join(',');
       fetch('https://api.upbit.com/v1/ticker?markets=' + encodeURIComponent(markets))
         .then(function(r) { return r.json(); })
         .then(function(arr) {
           if (!Array.isArray(arr)) return;
           arr.forEach(function(d) {
             var sym = d.market.replace('KRW-','');
-            liveprices[sym] = {price: d.trade_price, change24h: d.signed_change_rate * 100};
+            liveprices[sym] = {price: d.trade_price, change24h: d.signed_change_rate * 100, exchange: '업비트'};
             updateTickerRow(sym);
           });
-        })
-        .catch(function(){});
+        }).catch(function(){});
     }
-    pollUpbit();
-    upbitPollTimer = setInterval(pollUpbit, 5000);
+    bithumbTickers.slice(0, 30).forEach(function(ticker) {
+      fetch('https://api.bithumb.com/public/ticker/' + ticker + '_KRW')
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (!d || d.status !== '0000') return;
+          var price = parseFloat(d.data.closing_price);
+          var open = parseFloat(d.data.opening_price);
+          var change24h = open > 0 ? (price - open) / open * 100 : 0;
+          liveprices[ticker] = {price: price, change24h: change24h, exchange: '빗썸'};
+          updateTickerRow(ticker);
+        }).catch(function(){});
+    });
+  }
+
+  if (upbitTickers.length > 0 || bithumbTickers.length > 0) {
+    pollKrw();
+    upbitPollTimer = setInterval(pollKrw, 5000);
   }
 }
 
@@ -781,9 +800,7 @@ function updateTickerRow(sym) {
   if (!lp) return;
   var priceEl = document.getElementById('lp-' + sym);
   var changeEl = document.getElementById('lc-' + sym);
-  // 거래소 판별
-  var exchange = '바이낸스';
-  if (lp.price > 100 && !String(lp.price).includes('.')) exchange = '업비트';
+  var exchange = lp.exchange || '바이낸스';
   if (priceEl) priceEl.textContent = fmtPrice(lp.price, exchange);
   if (changeEl) {
     var chg = lp.change24h;
