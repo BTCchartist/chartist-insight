@@ -1,0 +1,1058 @@
+[
+  {
+    "key": "빗썸_CHR",
+    "time": "2026-05-22 19:13",
+    "price": 33.65,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_MEV",
+    "time": "2026-05-22 19:13",
+    "price": 4.015,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_EL",
+    "time": "2026-05-22 19:13",
+    "price": 2.73,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_XPR",
+    "time": "2026-05-22 19:13",
+    "price": 4.01,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_EGG",
+    "time": "2026-05-22 19:13",
+    "price": 1.279,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_YFI",
+    "time": "2026-05-22 19:13",
+    "price": 3744000.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_UMA",
+    "time": "2026-05-22 19:13",
+    "price": 707.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_RSR",
+    "time": "2026-05-22 19:13",
+    "price": 2.62,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_RLC",
+    "time": "2026-05-22 19:13",
+    "price": 638.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_BEL",
+    "time": "2026-05-22 19:13",
+    "price": 162.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_POLA",
+    "time": "2026-05-22 19:13",
+    "price": 10.24,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_MVC",
+    "time": "2026-05-22 19:13",
+    "price": 2.347,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_BIOT",
+    "time": "2026-05-22 19:13",
+    "price": 0.5335,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_SNX",
+    "time": "2026-05-22 19:13",
+    "price": 473.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_GRACY",
+    "time": "2026-05-22 19:13",
+    "price": 10.85,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_MAPO",
+    "time": "2026-05-22 19:13",
+    "price": 3.352,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_CTSI",
+    "time": "2026-05-22 19:13",
+    "price": 45.25,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_SUSHI",
+    "time": "2026-05-22 19:13",
+    "price": 315.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_CELR",
+    "time": "2026-05-22 19:13",
+    "price": 3.977,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_BFC",
+    "time": "2026-05-22 19:13",
+    "price": 21.92,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_ALICE",
+    "time": "2026-05-22 19:13",
+    "price": 192.0,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_OGN",
+    "time": "2026-05-22 19:13",
+    "price": 33.6,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_COTI",
+    "time": "2026-05-22 19:13",
+    "price": 19.11,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_CAKE",
+    "time": "2026-05-22 19:13",
+    "price": 2166.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_SIX",
+    "time": "2026-05-22 19:13",
+    "price": 12.81,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_ACH",
+    "time": "2026-05-22 19:13",
+    "price": 10.32,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_TEMCO",
+    "time": "2026-05-22 19:13",
+    "price": 0.939,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_KSM",
+    "time": "2026-05-22 19:13",
+    "price": 7610.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_NFT",
+    "time": "2026-05-22 19:13",
+    "price": 0.0005,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_C98",
+    "time": "2026-05-22 19:13",
+    "price": 29.98,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_DYDX",
+    "time": "2026-05-22 19:13",
+    "price": 233.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_JOE",
+    "time": "2026-05-22 19:13",
+    "price": 64.39,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_GALA",
+    "time": "2026-05-22 19:13",
+    "price": 5.06,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_REQ",
+    "time": "2026-05-22 19:13",
+    "price": 102.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_FANC",
+    "time": "2026-05-22 19:13",
+    "price": 2.006,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_MBX",
+    "time": "2026-05-22 19:13",
+    "price": 58.41,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_TAVA",
+    "time": "2026-05-22 19:13",
+    "price": 6.013,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_FITFI",
+    "time": "2026-05-22 19:13",
+    "price": 0.8096,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_CRTS",
+    "time": "2026-05-22 19:13",
+    "price": 0.1657,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_GMX",
+    "time": "2026-05-22 19:13",
+    "price": 10420.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_XPLA",
+    "time": "2026-05-22 19:13",
+    "price": 16.81,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_HFT",
+    "time": "2026-05-22 19:13",
+    "price": 20.75,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_RPL",
+    "time": "2026-05-22 19:13",
+    "price": 2639.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_CFX",
+    "time": "2026-05-22 19:13",
+    "price": 85.28,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_LDO",
+    "time": "2026-05-22 19:13",
+    "price": 524.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_S",
+    "time": "2026-05-22 19:13",
+    "price": 72.23,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_FET",
+    "time": "2026-05-22 19:13",
+    "price": 296.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_FLOKI",
+    "time": "2026-05-22 19:13",
+    "price": 0.0457,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_ILV",
+    "time": "2026-05-22 19:13",
+    "price": 6720.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_MAV",
+    "time": "2026-05-22 19:13",
+    "price": 20.89,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_AUDIO",
+    "time": "2026-05-22 19:13",
+    "price": 28.63,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_EDU",
+    "time": "2026-05-22 19:13",
+    "price": 67.84,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_PYR",
+    "time": "2026-05-22 19:13",
+    "price": 389.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_IOTX",
+    "time": "2026-05-22 19:13",
+    "price": 6.557,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_HIGH",
+    "time": "2026-05-22 19:13",
+    "price": 263.0,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_BICO",
+    "time": "2026-05-22 19:13",
+    "price": 39.51,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_ZTX",
+    "time": "2026-05-22 19:13",
+    "price": 0.4947,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_METIS",
+    "time": "2026-05-22 19:13",
+    "price": 5280.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_SPURS",
+    "time": "2026-05-22 19:13",
+    "price": 388.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_MAGIC",
+    "time": "2026-05-22 19:13",
+    "price": 95.04,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_ACE",
+    "time": "2026-05-22 19:13",
+    "price": 180.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_SKL",
+    "time": "2026-05-22 19:13",
+    "price": 9.239,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_PHA",
+    "time": "2026-05-22 19:13",
+    "price": 52.32,
+    "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_RON",
+    "time": "2026-05-22 19:13",
+    "price": 149.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_XAI",
+    "time": "2026-05-22 19:13",
+    "price": 15.47,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_CORE",
+    "time": "2026-05-22 19:13",
+    "price": 52.39,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_BB",
+    "time": "2026-05-22 19:13",
+    "price": 46.74,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_PCI",
+    "time": "2026-05-22 19:13",
+    "price": 73.53,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_LISTA",
+    "time": "2026-05-22 19:13",
+    "price": 118.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_SCR",
+    "time": "2026-05-22 19:13",
+    "price": 67.99,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_TURBO",
+    "time": "2026-05-22 19:13",
+    "price": 1.777,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_MORPHO",
+    "time": "2026-05-22 19:13",
+    "price": 2969.0,
+    "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_INIT",
+    "time": "2026-05-22 19:13",
+    "price": 128.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_ACX",
+    "time": "2026-05-22 19:13",
+    "price": 61.03,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_THE",
+    "time": "2026-05-22 19:13",
+    "price": 141.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_AMP",
+    "time": "2026-05-22 19:13",
+    "price": 1.243,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_A8",
+    "time": "2026-05-22 19:13",
+    "price": 15.53,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_SOLV",
+    "time": "2026-05-22 19:13",
+    "price": 6.339,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_SHELL",
+    "time": "2026-05-22 19:13",
+    "price": 51.8,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_GNO",
+    "time": "2026-05-22 19:13",
+    "price": 174600.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_GPS",
+    "time": "2026-05-22 19:13",
+    "price": 10.43,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_BMT",
+    "time": "2026-05-22 19:13",
+    "price": 23.02,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_C",
+    "time": "2026-05-22 19:13",
+    "price": 134.0,
+    "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_BABY",
+    "time": "2026-05-22 19:13",
+    "price": 24.5,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_GRASS",
+    "time": "2026-05-22 19:13",
+    "price": 640.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_KMNO",
+    "time": "2026-05-22 19:13",
+    "price": 31.93,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_PUMPBTC",
+    "time": "2026-05-22 19:13",
+    "price": 22.76,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_HAEDAL",
+    "time": "2026-05-22 19:13",
+    "price": 43.77,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_PROMPT",
+    "time": "2026-05-22 19:13",
+    "price": 54.48,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_BTR",
+    "time": "2026-05-22 19:13",
+    "price": 40.37,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_CUDIS",
+    "time": "2026-05-22 19:13",
+    "price": 11.72,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_RESOLV",
+    "time": "2026-05-22 19:13",
+    "price": 56.41,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_EUL",
+    "time": "2026-05-22 19:13",
+    "price": 1930.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_TOWNS",
+    "time": "2026-05-22 19:13",
+    "price": 5.049,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_CAMP",
+    "time": "2026-05-22 19:13",
+    "price": 2.361,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_THQ",
+    "time": "2026-05-22 19:13",
+    "price": 31.52,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_POPCAT",
+    "time": "2026-05-22 19:13",
+    "price": 84.93,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_ASTER",
+    "time": "2026-05-22 19:13",
+    "price": 1022.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "빗썸_YB",
+    "time": "2026-05-22 19:13",
+    "price": 184.0,
+    "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_CYS",
+    "time": "2026-05-22 19:13",
+    "price": 711.0,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_LTC",
+    "time": "2026-05-22 19:13",
+    "price": 54.18,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_HOT",
+    "time": "2026-05-22 19:13",
+    "price": 0.000403,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_ONE",
+    "time": "2026-05-22 19:13",
+    "price": 0.00207,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_WIN",
+    "time": "2026-05-22 19:13",
+    "price": 1.986e-05,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_BAND",
+    "time": "2026-05-22 19:13",
+    "price": 0.217,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_EUR",
+    "time": "2026-05-22 19:13",
+    "price": 1.1627,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_ZEN",
+    "time": "2026-05-22 19:13",
+    "price": 6.641,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_DGB",
+    "time": "2026-05-22 19:13",
+    "price": 0.00363,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_LUNA",
+    "time": "2026-05-22 19:13",
+    "price": 0.0647,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_DIA",
+    "time": "2026-05-22 19:13",
+    "price": 0.1854,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_ROSE",
+    "time": "2026-05-22 19:13",
+    "price": 0.00995,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_JUV",
+    "time": "2026-05-22 19:13",
+    "price": 0.444,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_ASR",
+    "time": "2026-05-22 19:13",
+    "price": 1.134,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_TWT",
+    "time": "2026-05-22 19:13",
+    "price": 0.4675,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "바이낸스_DODO",
+    "time": "2026-05-22 19:13",
+    "price": 0.02346,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_ACM",
+    "time": "2026-05-22 19:13",
+    "price": 0.4,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_TLM",
+    "time": "2026-05-22 19:13",
+    "price": 0.001791,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_BAR",
+    "time": "2026-05-22 19:13",
+    "price": 0.392,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_SLP",
+    "time": "2026-05-22 19:13",
+    "price": 0.000649,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_XVG",
+    "time": "2026-05-22 19:13",
+    "price": 0.003442,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_FARM",
+    "time": "2026-05-22 19:13",
+    "price": 6.74,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "바이낸스_QUICK",
+    "time": "2026-05-22 19:13",
+    "price": 0.00953,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_MBOX",
+    "time": "2026-05-22 19:13",
+    "price": 0.0116,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_RARE",
+    "time": "2026-05-22 19:13",
+    "price": 0.0163,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_LAZIO",
+    "time": "2026-05-22 19:13",
+    "price": 0.569,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_ADX",
+    "time": "2026-05-22 19:13",
+    "price": 0.0673,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_MOVR",
+    "time": "2026-05-22 19:13",
+    "price": 2.329,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_CITY",
+    "time": "2026-05-22 19:13",
+    "price": 0.49,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "바이낸스_QI",
+    "time": "2026-05-22 19:13",
+    "price": 0.00161,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_ALCX",
+    "time": "2026-05-22 19:13",
+    "price": 5.04,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_SPELL",
+    "time": "2026-05-22 19:13",
+    "price": 0.0001603,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_BTTC",
+    "time": "2026-05-22 19:13",
+    "price": 3.2e-07,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_XNO",
+    "time": "2026-05-22 19:13",
+    "price": 0.45,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_ALPINE",
+    "time": "2026-05-22 19:13",
+    "price": 0.425,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_NEXO",
+    "time": "2026-05-22 19:13",
+    "price": 0.878,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_LUNC",
+    "time": "2026-05-22 19:13",
+    "price": 7.947e-05,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_SYN",
+    "time": "2026-05-22 19:13",
+    "price": 0.0517,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_SSV",
+    "time": "2026-05-22 19:13",
+    "price": 2.663,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_PROM",
+    "time": "2026-05-22 19:13",
+    "price": 1.158,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "바이낸스_WBETH",
+    "time": "2026-05-22 19:13",
+    "price": 2339.01,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_MEME",
+    "time": "2026-05-22 19:13",
+    "price": 0.000529,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_BEAMX",
+    "time": "2026-05-22 19:13",
+    "price": 0.001874,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_PIVX",
+    "time": "2026-05-22 19:13",
+    "price": 0.0669,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_VANRY",
+    "time": "2026-05-22 19:13",
+    "price": 0.005129,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_1000SATS",
+    "time": "2026-05-22 19:13",
+    "price": 1.353e-05,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_AEVO",
+    "time": "2026-05-22 19:13",
+    "price": 0.0259,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_TNSR",
+    "time": "2026-05-22 19:13",
+    "price": 0.0392,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_BANANA",
+    "time": "2026-05-22 19:13",
+    "price": 4.013,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_NEIRO",
+    "time": "2026-05-22 19:13",
+    "price": 0.00010261,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_1MBABYDOGE",
+    "time": "2026-05-22 19:13",
+    "price": 0.0004095,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_CATI",
+    "time": "2026-05-22 19:13",
+    "price": 0.0511,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_HMSTR",
+    "time": "2026-05-22 19:13",
+    "price": 0.0001524,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_CETUS",
+    "time": "2026-05-22 19:13",
+    "price": 0.02743,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_ACT",
+    "time": "2026-05-22 19:13",
+    "price": 0.0134,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_USUAL",
+    "time": "2026-05-22 19:13",
+    "price": 0.0149,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_VELODROME",
+    "time": "2026-05-22 19:13",
+    "price": 0.01705,
+    "sig_type": "trend"
+  },
+  {
+    "key": "바이낸스_1000CAT",
+    "time": "2026-05-22 19:13",
+    "price": 0.0019,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_AIXBT",
+    "time": "2026-05-22 19:13",
+    "price": 0.0319,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_1000CHEEMS",
+    "time": "2026-05-22 19:13",
+    "price": 0.000728,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_HEI",
+    "time": "2026-05-22 19:13",
+    "price": 0.0782,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_EPIC",
+    "time": "2026-05-22 19:13",
+    "price": 0.308,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_MUBARAK",
+    "time": "2026-05-22 19:13",
+    "price": 0.01437,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_TUT",
+    "time": "2026-05-22 19:13",
+    "price": 0.01186,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_DOLO",
+    "time": "2026-05-22 19:13",
+    "price": 0.03306,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_MITO",
+    "time": "2026-05-22 19:13",
+    "price": 0.04208,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_TURTLE",
+    "time": "2026-05-22 19:13",
+    "price": 0.0471,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_GIGGLE",
+    "time": "2026-05-22 19:13",
+    "price": 34.04,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_FOGO",
+    "time": "2026-05-22 19:13",
+    "price": 0.01655,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_OPN",
+    "time": "2026-05-22 19:13",
+    "price": 0.1908,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_NIGHT",
+    "time": "2026-05-22 19:13",
+    "price": 0.0312,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_ATA",
+    "time": "2026-05-22 21:00",
+    "price": 0.004,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "바이낸스_SYS",
+    "time": "2026-05-22 21:00",
+    "price": 0.00411,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "바이낸스_CVX",
+    "time": "2026-05-22 21:00",
+    "price": 1.718,
+    "sig_type": "ma"
+  },
+  {
+    "key": "바이낸스_GNS",
+    "time": "2026-05-22 21:00",
+    "price": 0.468,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "바이낸스_NOT",
+    "time": "2026-05-22 21:00",
+    "price": 0.000481,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "바이낸스_NOM",
+    "time": "2026-05-22 21:00",
+    "price": 0.00216,
+    "sig_type": "rsi"
+  }
+]
