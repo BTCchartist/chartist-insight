@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>차티스트 인사이트</title>
+<meta name="description" content="알트코인 네비게이션 · 추세전환 · RSI 다이버전스 · 기자모리 · 와이코프 신호를 실시간으로 제공합니다.">
+<meta property="og:title" content="차티스트 인사이트">
+<meta property="og:description" content="알트코인 네비게이션 · 추세전환 · RSI 다이버전스 · 기자모리 · 와이코프 신호를 실시간으로 제공합니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chartist-insight.com">
+<meta property="og:image" content="https://chartist-insight.com/og-image.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="차티스트 인사이트">
+<meta name="twitter:description" content="알트코인 네비게이션 · 추세전환 · RSI 다이버전스 · 기자모리 · 와이코프 신호를 실시간으로 제공합니다.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
   :root {
@@ -20,7 +29,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:var(--fs-base);min-height:100vh;padding:0 0 60px;}
-  body.large{--fs-base:16px;--fs-sm:13px;--fs-md:15px;--fs-lg:17px;--pad-input:11px 13px;--pad-section:22px;zoom:1.15;}
+  body.large{--fs-base:16px;--fs-sm:13px;--fs-md:15px;--fs-lg:17px;--pad-input:11px 13px;--pad-section:22px;}
   .container{max-width:640px;margin:0 auto;padding:0 16px;}
   .site-header{text-align:center;padding:20px 16px 12px;max-width:640px;margin:0 auto;}
   .site-header h1{font-size:20px;font-weight:700;color:var(--gold);letter-spacing:0.3px;margin-bottom:10px;}
@@ -273,7 +282,7 @@
     <h1>[차티스트] 트레이딩 계산기</h1>
     <p><span style="color:var(--red);font-size:10px;">●</span> 빨간 점 + 골드 음영 = 필수 입력 &nbsp;|&nbsp; 나머지 = 선택 또는 자동 계산</p>
   </div>
-  <div class="section"><div class="sec-header"><div class="badge">1</div><span class="sec-title">기본 설정</span></div><div class="grid3"><div class="field"><label><span class="req-dot"></span>종목</label><input type="text" id="symbol" class="required" placeholder="BTCUSDT" value="BTCUSDT"></div><div class="field" id="direction-field"><label><span class="req-dot"></span><span id="direction-label">방향</span></label><select id="direction" class="required" onchange="calc()"><option value="long">LONG</option><option value="short">SHORT</option></select></div><div class="field"><label><span class="req-dot"></span><span id="lev-label">배율</span><span class="tooltip-wrap" id="lev-tooltip"><span class="tooltip-icon">?</span><span class="tooltip-box">레버리지 배율. 10x면 증거금의 10배 포지션을 잡음.</span></span></label><input type="number" id="leverage" class="required" placeholder="10" value="10" min="1" max="125" oninput="calc()"></div></div></div>
+  <div class="section"><div class="sec-header"><div class="badge">1</div><span class="sec-title">기본 설정</span></div><div class="grid3"><div class="field"><label><span class="req-dot"></span>종목</label><input type="text" id="symbol" class="required" placeholder="BTCUSDT" value="BTCUSDT"></div><div class="field" id="direction-field"><label><span class="req-dot"></span><span id="direction-label">방향</span></label><select id="direction" class="required" onchange="calc()"><option value="long">LONG</option><option value="short">SHORT</option></select></div><div class="field"><label><span class="req-dot"></span><span id="lev-label">배율</span><span class="tooltip-wrap" id="lev-tooltip"><span class="tooltip-icon">?</span><span class="tooltip-box">레버리지 배율. 10x면 증거금의 10배 포지션을 잡음.</span></span></label><input type="number" id="leverage" class="required" placeholder="10" value="10" min="1" max="125" oninput="calc()" onblur="validateLeverage()"></div></div></div>
   <div class="section"><div class="sec-header"><div class="badge">2</div><span class="sec-title">수량 단위 선택</span></div><div class="toggle-row" id="unit-toggle"><button class="toggle-btn active" onclick="setUnit('usdt')">USDT (금액 기준)</button><button class="toggle-btn" onclick="setUnit('qty')">수량 (코인 개수)</button><button class="toggle-btn" onclick="setUnit('krw')">KRW (원화 기준)</button></div><div style="font-size:var(--fs-sm);color:var(--text3);" id="unit-hint">※ USDT: 투자 금액(예: 5000 USDT)으로 입력</div></div>
   <div class="section"><div class="sec-header"><div class="badge">3</div><span class="sec-title">진입 방식 선택</span><span class="sec-sub">A 또는 B 선택</span></div><div class="toggle-row" id="method-toggle"><button class="toggle-btn active" onclick="setMethod('A')">방법 A — 일반 분할매수</button><button class="toggle-btn" onclick="setMethod('B')">방법 B — 스케일드 오더<span class="tooltip-wrap" onclick="event.stopPropagation()"><span class="tooltip-icon">?</span><span class="tooltip-box">구간 상단~하단 사이를 균등 분할 배치.</span></span></button></div>
     <div class="method-a-content show" id="method-a"><div class="sub-section-label">진입가 + 수량 직접 입력 (1~3차)</div><div class="grid2"><div class="field"><label><span class="req-dot"></span><span id="a1p-label">1차 진입가 (USDT)</span></label><input type="text" id="a1p" class="required" placeholder="필수" oninput="handleNumInput(this)" onblur="fmtInput(this)"></div><div class="field"><label><span class="req-dot"></span><span id="a1q-label">1차 USDT</span></label><input type="text" id="a1q" class="required" placeholder="필수" oninput="handleNumInput(this)" onblur="fmtInput(this)"></div></div><div class="grid2"><div class="field"><label><span id="a2p-label">2차 진입가 (USDT)</span></label><input type="text" id="a2p" placeholder="선택" oninput="handleNumInput(this)" onblur="fmtInput(this)"></div><div class="field"><label><span id="a2q-label">2차 USDT</span></label><input type="text" id="a2q" placeholder="선택" oninput="handleNumInput(this)" onblur="fmtInput(this)"></div></div><div class="grid2"><div class="field"><label><span id="a3p-label">3차 진입가 (USDT)</span></label><input type="text" id="a3p" placeholder="선택" oninput="handleNumInput(this)" onblur="fmtInput(this)"></div><div class="field"><label><span id="a3q-label">3차 USDT</span></label><input type="text" id="a3q" placeholder="선택" oninput="handleNumInput(this)" onblur="fmtInput(this)"></div></div></div>
@@ -521,6 +530,7 @@ function switchTab(tab, btn) {
   // 알트코인 탭 아닐 때 폴링 타이머 정리
   if (tab !== 'altcoin') {
     if (upbitPollTimer) { clearInterval(upbitPollTimer); upbitPollTimer = null; }
+    binanceReconnectActive = false;
     binanceWsList.forEach(function(ws) { try { ws.close(); } catch(e){} });
     binanceWsList = [];
   }
@@ -577,6 +587,7 @@ function loadAltcoinData() {
       renderAltcoin();
     })
     .catch(function() {
+      // 폴백: 개별 fetch 시도
       var urls = {
         short: BASE_URL + 'altcoin_short.json',
         ma:    BASE_URL + 'altcoin_ma.json',
@@ -591,6 +602,12 @@ function loadAltcoinData() {
           .catch(function() { return {key: k, data: null}; });
       })).then(function(results) {
         altcoinData = {};
+        var allFailed = results.every(function(r) { return r.data === null; });
+        if (allFailed) {
+          document.getElementById('altcoin-content').innerHTML =
+            '<div class="empty-box">데이터 로드에 실패했습니다. 잠시 후 다시 시도해주세요.</div>';
+          return;
+        }
         results.forEach(function(r) { altcoinData[r.key] = r.data || (r.key === 'kiz' || r.key === 'wyc' ? {} : []); });
         renderAltcoin();
       });
@@ -598,6 +615,8 @@ function loadAltcoinData() {
 }
 
 function showSkeletonAltcoin() {
+  var headerEl = document.getElementById('altcoin-list-header');
+  if (headerEl) headerEl.style.display = 'none';
   var skItems = '';
   for (var i = 0; i < 5; i++) {
     skItems += '<div class="ticker-item" style="opacity:0.4;">' +
@@ -624,6 +643,7 @@ var sigMap = {
 function buildAltcoinItems() {
   if (!altcoinData) return [];
   var items = [];
+  var seenKeys = {}; // exchange_ticker_sig 기준 중복 방지
   var f = currentAltcoinFilter;
   if (Array.isArray(altcoinData.short)) {
     altcoinData.short.forEach(function(e) {
@@ -631,14 +651,32 @@ function buildAltcoinItems() {
       if (f !== 'all' && f !== sig) return;
       if (!isInRange(e.time)) return;
       var parts = (e.key || '').split('_');
+      var dedup = (e.key || '') + '_' + sig;
+      if (seenKeys[dedup]) return;
+      seenKeys[dedup] = true;
       items.push({ticker: parts[1] || '', exchange: parts[0] || '', sigPrice: e.price, time: e.time, sig: sig, source: '12H'});
     });
+  }
+  if (f === 'all' || f === 'ma') {
+    if (Array.isArray(altcoinData.ma)) {
+      altcoinData.ma.forEach(function(e) {
+        if (!isInRange(e.time)) return;
+        var parts = (e.key || '').split('_');
+        var dedup = (e.key || '') + '_ma';
+        if (seenKeys[dedup]) return;
+        seenKeys[dedup] = true;
+        items.push({ticker: parts[1] || '', exchange: parts[0] || '', sigPrice: e.price, time: e.time, sig: 'ma', source: '일봉'});
+      });
+    }
   }
   if (f === 'all' || f === 'trend') {
     if (Array.isArray(altcoinData.mid)) {
       altcoinData.mid.forEach(function(e) {
         if (!isInRange(e.time)) return;
         var parts = (e.key || '').split('_');
+        var dedup = (e.key || '') + '_trend';
+        if (seenKeys[dedup]) return;
+        seenKeys[dedup] = true;
         items.push({ticker: parts[1] || '', exchange: parts[0] || '', sigPrice: e.price, time: e.time, sig: 'trend', source: '일봉'});
       });
     }
@@ -650,6 +688,9 @@ function buildAltcoinItems() {
         var dateStr = (typeof val === 'object' && val !== null) ? val.date : val;
         var price = (typeof val === 'object' && val !== null) ? val.price : null;
         if (!isInRange(dateStr)) return;
+        var dedup = key + '_kiz';
+        if (seenKeys[dedup]) return;
+        seenKeys[dedup] = true;
         var parts = key.split('_');
         items.push({ticker: parts[1] || key, exchange: parts[0] || '', sigPrice: price, time: dateStr, sig: 'kiz', source: '일봉'});
       });
@@ -662,6 +703,9 @@ function buildAltcoinItems() {
         var dateStr = (typeof val === 'object' && val !== null) ? val.date : val;
         var price = (typeof val === 'object' && val !== null) ? val.price : null;
         if (!isInRange(dateStr)) return;
+        var dedup = key + '_wyc';
+        if (seenKeys[dedup]) return;
+        seenKeys[dedup] = true;
         var parts = key.split('_');
         items.push({ticker: parts[1] || key, exchange: parts[0] || '', sigPrice: price, time: dateStr, sig: 'wyc', source: '일봉'});
       });
@@ -685,8 +729,10 @@ function sortAltcoinItems(items) {
       var bc = liveprices[b.ticker] ? liveprices[b.ticker].change24h : null;
       return d * ((ac || -999) - (bc || -999));
     }
-    // time (default)
-    return (b.time || '').localeCompare(a.time || '');
+    // time (default) — 날짜만 있는 항목은 시간 00:00 으로 정규화
+    var at = (a.time || '').length === 10 ? a.time + ' 00:00' : (a.time || '');
+    var bt = (b.time || '').length === 10 ? b.time + ' 00:00' : (b.time || '');
+    return bt.localeCompare(at);
   });
 }
 
@@ -730,7 +776,14 @@ function renderAltcoin() {
   var updatedEl = document.getElementById('altcoin-updated');
   var contentEl = document.getElementById('altcoin-content');
   var headerEl = document.getElementById('altcoin-list-header');
-  updatedEl.textContent = '총 ' + items.length + '개 · 5분마다 자동 갱신';
+  var displayCount = Math.min(items.length, 200);
+  var totalCount = items.length;
+  updatedEl.textContent = '총 ' + totalCount + '개' + (totalCount > 200 ? ' (최대 200개 표시)' : '') + ' · 5분마다 자동 갱신';
+  var _now = new Date();
+  var _h = String(_now.getHours()).padStart(2, '0');
+  var _m = String(_now.getMinutes()).padStart(2, '0');
+  var _lastEl = document.getElementById('altcoin-last-updated');
+  if (_lastEl) _lastEl.textContent = '마지막 업데이트 ' + _h + ':' + _m;
 
   if (items.length === 0) {
     if (headerEl) headerEl.style.display = 'none';
@@ -744,8 +797,9 @@ function renderAltcoin() {
   // 실시간 가격 구독 시작
   connectLivePrices(items);
 
+  var visibleItems = items.slice(0, 200);
   var html = '<div class="ticker-list">';
-  items.slice(0, 200).forEach(function(item) {
+  visibleItems.forEach(function(item) {
     var sm = sigMap[item.sig] || {label: item.sig, cls: ''};
     var lp = liveprices[item.ticker];
     var dispPrice = lp ? fmtPrice(lp.price, item.exchange) : fmtPrice(item.sigPrice, item.exchange);
@@ -753,7 +807,7 @@ function renderAltcoin() {
     var chgCls = (chg24 > 0) ? 'up' : (chg24 < 0 ? 'dn' : 'flat');
     var chgSign = chg24 > 0 ? '+' : '';
     var chgTxt = (chg24 !== null && chg24 !== undefined) ? chgSign + chg24.toFixed(2) + '%' : '—';
-    html += '<div class="ticker-item" id="ti-' + item.ticker + '-' + item.sig + '">' +
+    html += '<div class="ticker-item" id="tr-' + item.ticker + '">' +
       '<div class="ticker-left">' +
       '<div class="ticker-name">' + (item.ticker || '—') +
       '<span class="sig-badge ' + sm.cls + '">' + sm.label + '</span></div>' +
@@ -772,8 +826,14 @@ function renderAltcoin() {
 var binanceWsList = [];
 var upbitPollTicker = null;
 var upbitPollActive = [];
+var _lastConnectedTickers = '';
 
 function connectLivePrices(items) {
+  // 동일 ticker 구성이면 재연결 스킵
+  var _tickerKey = items.slice(0, 200).map(function(i) { return i.exchange + '_' + i.ticker; }).sort().join(',');
+  if (_tickerKey === _lastConnectedTickers) return;
+  _lastConnectedTickers = _tickerKey;
+
   // 바이낸스 / 업비트/빗썸 분리
   var binanceTickers = [];
   var krwTickers = [];
@@ -785,10 +845,12 @@ function connectLivePrices(items) {
       if (krwTickers.indexOf(item.ticker) === -1) krwTickers.push(item.ticker);
     }
   });
+  // 중복 제거
 
   // 바이낸스 WebSocket (combined stream)
   binanceWsList.forEach(function(ws) { try { ws.close(); } catch(e){} });
   binanceWsList = [];
+  binanceReconnectActive = true;
   if (binanceTickers.length > 0) {
     var streams = binanceTickers.map(function(t) { return t.toLowerCase() + 'usdt@ticker'; }).join('/');
     reconnectBinanceWs(streams);
@@ -1001,7 +1063,7 @@ function connectBtcWs() {
   try {
     btcWs = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@ticker');
     btcWs.onopen = function() {
-      document.getElementById('btc-change').textContent = '연결됨...';
+      // 연결 직후엔 텍스트 변경 안 함 — onmessage에서 가격 수신 시 업데이트
     };
     btcWs.onmessage = function(e) {
       try {
@@ -1027,7 +1089,9 @@ function connectBtcWs() {
 }
 
 // ── 바이낸스 WebSocket 재연결 ──
+var binanceReconnectActive = false;
 function reconnectBinanceWs(streams) {
+  if (!binanceReconnectActive) return; // 재연결 비활성화 시 중단
   var wsUrl = 'wss://stream.binance.com:9443/stream?streams=' + streams;
   var ws = new WebSocket(wsUrl);
   ws.onmessage = function(ev) {
@@ -1041,7 +1105,9 @@ function reconnectBinanceWs(streams) {
     } catch(e) {}
   };
   ws.onclose = function() {
-    setTimeout(function() { reconnectBinanceWs(streams); }, 3000);
+    if (binanceReconnectActive) {
+      setTimeout(function() { reconnectBinanceWs(streams); }, 3000);
+    }
   };
   binanceWsList.push(ws);
   return ws;
@@ -1107,7 +1173,7 @@ var currentUnit = 'usdt', currentMethod = 'A';
 var DEFAULT_FEE_FUTURES = 0.035, DEFAULT_FEE_SPOT = 0.05;
 
 function stripComma(s) { return String(s).replace(/,/g, ''); }
-function parseNum(s) { var n = parseFloat(stripComma(s)); return isNaN(n) ? null : n; }
+function parseNum(s) { var n = parseFloat(stripComma(s)); return (isNaN(n) || n < 0) ? null : n; }
 function handleNumInput(el) { el.value = stripComma(el.value); calc(); }
 function fmtInput(el) {
   var n = parseNum(el.value);
@@ -1115,6 +1181,15 @@ function fmtInput(el) {
   el.value = currentUnit === 'krw' ? Math.round(n).toLocaleString('ko-KR') : n.toLocaleString('ko-KR', {maximumFractionDigits: 8});
 }
 function vt(id) { return parseNum(document.getElementById(id).value); }
+
+function validateLeverage() {
+  var el = document.getElementById('leverage');
+  var v = parseFloat(el.value);
+  if (!isNaN(v) && v <= 0) {
+    el.value = '';
+    el.placeholder = '1 이상 입력';
+  }
+}
 
 function setUnit(u) {
   currentUnit = u;
@@ -1243,6 +1318,7 @@ function calc() {
       var hi = vt('b'+n+'hi'), lo = vt('b'+n+'lo'), qty = vt('b'+n+'q');
       var el = document.getElementById('b'+n+'avg');
       if (hi !== null && lo !== null && qty !== null && hi > 0 && lo > 0 && qty > 0) {
+        if (hi < lo) { el.textContent = '⚠️ 상단>하단'; return; }
         var bAvg = (hi+lo)/2; el.textContent = fmtC(bAvg);
         var pv = toPosVal(bAvg, qty), coins = toCoins(bAvg, qty);
         if (pv !== null && coins !== null) { tv += pv; tq += coins; }
