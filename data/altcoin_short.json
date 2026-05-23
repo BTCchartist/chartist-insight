@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "key": "빗썸_SNX",
+    "time": "2026-05-23 18:00",
+    "price": 454.0,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_OXT",
+    "time": "2026-05-23 18:00",
+    "price": 17.9,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_RECALL",
+    "time": "2026-05-23 18:00",
+    "price": 87.47,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "빗썸_STABLE",
+    "time": "2026-05-23 18:00",
+    "price": 50.93,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "바이낸스_XNO",
+    "time": "2026-05-23 18:00",
+    "price": 0.431,
+    "sig_type": "rsi"
+  },
+  {
+    "key": "바이낸스_OPN",
+    "time": "2026-05-23 18:00",
+    "price": 0.1715,
+    "sig_type": "rsi"
+  }
+]
