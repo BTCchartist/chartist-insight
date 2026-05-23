@@ -730,7 +730,7 @@ function renderAltcoin() {
   var updatedEl = document.getElementById('altcoin-updated');
   var contentEl = document.getElementById('altcoin-content');
   var headerEl = document.getElementById('altcoin-list-header');
-  updatedEl.textContent = '총 ' + items.length + '개 · 5분마다 자동 갱신';
+  updatedEl.textContent = '총 ' + items.length + '개 · 30분마다 자동 갱신';
 
   if (items.length === 0) {
     if (headerEl) headerEl.style.display = 'none';
@@ -1082,7 +1082,7 @@ function drawGauge(val, color) {
   ctx.stroke();
 }
 
-// ── 5분마다 데이터 자동 갱신 ──
+// ── 30분마다 데이터 자동 갱신 ──
 function autoRefresh() {
   loadFearGreed();
   // 알트코인 데이터 새로고침
