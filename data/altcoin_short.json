@@ -64,5 +64,11 @@
     "time": "2026-05-24 18:00",
     "price": 337.0,
     "sig_type": "trend"
+  },
+  {
+    "key": "바이낸스_QNT",
+    "time": "2026-05-24 21:00",
+    "price": 82.49,
+    "sig_type": "trend"
   }
 ]
