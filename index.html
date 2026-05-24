@@ -1057,24 +1057,18 @@ function filterStockSig(sig) {
 
 // ── BTC 실시간 (바이낸스 WebSocket) ──
 var btcWs = null;
-var btcOpen24h = null;
+var btcTickerWs = null;
+var btcChange24h = null; // @ticker에서 유지
 
 function connectBtcWs() {
+  // ── aggTrade: 실제 체결마다 가격 업데이트 ──
   try {
-    btcWs = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@ticker');
-    btcWs.onopen = function() {
-      // 연결 직후엔 텍스트 변경 안 함 — onmessage에서 가격 수신 시 업데이트
-    };
+    btcWs = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@aggTrade');
     btcWs.onmessage = function(e) {
       try {
         var d = JSON.parse(e.data);
-        var price = parseFloat(d.c);
-        var open = parseFloat(d.o);
-        var change = ((price - open) / open) * 100;
+        var price = parseFloat(d.p);
         document.getElementById('btc-price').textContent = '$' + price.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
-        var changeEl = document.getElementById('btc-change');
-        changeEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '% (24h)';
-        changeEl.className = 'mc-change ' + (change >= 0 ? 'up' : 'dn');
       } catch(err) {}
     };
     btcWs.onerror = function() {
@@ -1086,6 +1080,26 @@ function connectBtcWs() {
   } catch(e) {
     setTimeout(connectBtcWs, 3000);
   }
+
+  // ── ticker: 24h 변동률 유지 ──
+  try {
+    btcTickerWs = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@ticker');
+    btcTickerWs.onmessage = function(e) {
+      try {
+        var d = JSON.parse(e.data);
+        var change = parseFloat(d.P);
+        btcChange24h = change;
+        var changeEl = document.getElementById('btc-change');
+        changeEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '% (24h)';
+        changeEl.className = 'mc-change ' + (change >= 0 ? 'up' : 'dn');
+      } catch(err) {}
+    };
+    btcTickerWs.onclose = function() {
+      setTimeout(function() {
+        try { btcTickerWs = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@ticker'); } catch(e) {}
+      }, 3000);
+    };
+  } catch(e) {}
 }
 
 // ── 바이낸스 WebSocket 재연결 ──
