@@ -10,5 +10,23 @@
     "time": "2026-05-25 09:00",
     "price": 1046.0,
     "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_SIX",
+    "time": "2026-05-25 21:00",
+    "price": 14.19,
+    "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_HUMA",
+    "time": "2026-05-25 21:00",
+    "price": 37.33,
+    "sig_type": "trend"
+  },
+  {
+    "key": "바이낸스_CATI",
+    "time": "2026-05-25 21:00",
+    "price": 0.0577,
+    "sig_type": "trend"
   }
 ]
