@@ -1982,6 +1982,11 @@ function initJournal(){
     journalUser=saved;journalPw=savedPw;
     loadJournalTrades();
     showJournalMain();
+  }else{
+    var auth=document.getElementById('j-auth-screen');
+    var main=document.getElementById('journal-main');
+    if(auth)auth.style.display='';
+    if(main){main.style.display='none';main.classList.remove('show');}
   }
 }
 
