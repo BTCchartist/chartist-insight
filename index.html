@@ -1771,9 +1771,7 @@ function initBtcBlur(){
   var unlocked=localStorage.getItem('rsi_unlocked')==='1';
   if(!unlocked){
     var content=document.getElementById('btc-blur-content');
-    var paywall=document.getElementById('btc-paywall-inline');
     if(content)content.classList.add('blurred');
-    if(paywall)paywall.classList.add('show');
   }
 }
 function checkBtcPasswordInline(){

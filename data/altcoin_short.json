@@ -22,5 +22,41 @@
     "time": "2026-05-31 09:00",
     "price": 0.00194,
     "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_BEL",
+    "time": "2026-05-31 21:00",
+    "price": 156.0,
+    "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_CELR",
+    "time": "2026-05-31 21:00",
+    "price": 3.88,
+    "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_CAKE",
+    "time": "2026-05-31 21:00",
+    "price": 2247.0,
+    "sig_type": "trend"
+  },
+  {
+    "key": "빗썸_IOTX",
+    "time": "2026-05-31 21:00",
+    "price": 6.675,
+    "sig_type": "trend"
+  },
+  {
+    "key": "바이낸스_MEME",
+    "time": "2026-05-31 21:00",
+    "price": 0.000581,
+    "sig_type": "trend"
+  },
+  {
+    "key": "바이낸스_FORM",
+    "time": "2026-05-31 21:00",
+    "price": 0.2627,
+    "sig_type": "trend"
   }
 ]
