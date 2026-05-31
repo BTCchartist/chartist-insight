@@ -1410,7 +1410,7 @@ function filterAltcoin(f){
   if(f==='rsi'||f==='all'){
     if(wrap)wrap.style.display='block';
     if(!rsiUnlocked){
-      if(content)content.classList.add('blurred');
+      if(content){content.classList.add('blurred');content.style.filter='blur(6px)';}
       if(paywall)paywall.classList.remove('show');
       if(content)content.onclick=function(){lockRsi();};
     }else{
