@@ -2299,11 +2299,11 @@ async function jLoadTrades(){
 function jRenderStats(){
   try{
     var closed=(jAllTrades||[]).filter(function(t){return t&&t.status==='closed';});
-    var wins=closed.filter(function(t){return(parseFloat(t.pnl)||0)>0;});
-    var totalPnl=closed.reduce(function(s,t){return s+(parseFloat(t.pnl)||0);},0);
+    var wins=closed.filter(function(t){return(parseFloat(t.pnl_amount||t.pnl)||0)>0;});
+    var totalPnl=closed.reduce(function(s,t){return s+(parseFloat(t.pnl_amount||t.pnl)||0);},0);
     var wr=closed.length>0?Math.round(wins.length/closed.length*100):0;
     var rrS=0,rrC=0;
-    closed.forEach(function(t){var en=parseFloat(t.entry_price)||0,ex=parseFloat(t.exit_price)||0,sl=parseFloat(t.stop_loss)||0;if(en&&ex&&sl&&Math.abs(en-sl)>0){rrS+=Math.abs(ex-en)/Math.abs(en-sl);rrC++;}});
+    closed.forEach(function(t){var en=parseFloat(t.entry)||0,ex=parseFloat(t.exit_price||t.exit)||0,sl=parseFloat(t.stop_loss||t.sl)||0;if(en&&ex&&sl&&Math.abs(en-sl)>0){rrS+=Math.abs(ex-en)/Math.abs(en-sl);rrC++;}});
     var openCnt=(jAllTrades||[]).filter(function(t){return t&&t.status==='open';}).length;
     var ts=document.getElementById('j-s-total');if(ts)ts.textContent=jAllTrades.length+'건 (오픈 '+openCnt+')';
     var we=document.getElementById('j-s-wr');if(we){we.textContent=wr+'%';we.style.color=wr>=50?'#26a642':'#e2534a';}
@@ -2326,10 +2326,10 @@ function jRenderList(){
     var tc=document.getElementById('j-trade-count');if(tc)tc.textContent=trades.length+'건';
     if(!trades.length){tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:60px 20px;color:#555;font-size:13px;">📋 매매 기록이 없습니다</td></tr>';return;}
     tbody.innerHTML=trades.map(function(t){
-      var pnl=parseFloat(t.pnl)||0;
+      var pnl=parseFloat(t.pnl_amount||t.pnl)||0;
       var pc=pnl>0?'color:#26a642;font-weight:700;':pnl<0?'color:#e2534a;font-weight:700;':'color:#555;';
       var ps=pnl!==0?(pnl>0?'+':'')+pnl.toFixed(1)+'$':'—';
-      var sz=parseFloat(t.size)||0;var lv=parseFloat(String(t.leverage||'1').replace(/x/i,''))||1;
+      var sz=parseFloat(t.amount||t.size)||0;var lv=parseFloat(String(t.leverage||'1').replace(/x/i,''))||1;
       var pp=sz>0&&pnl!==0?(pnl>0?'+':'')+(pnl/sz*100/lv).toFixed(1)+'%':'—';
       var tk=(t.ticker||t.symbol||'').toUpperCase();
       var ls=t.leverage?String(t.leverage).toLowerCase().includes('x')?t.leverage:t.leverage+'x':'';
@@ -2339,8 +2339,8 @@ function jRenderList(){
       return '<tr style="border-bottom:1px solid #1a1a1a;">'+
         '<td style="padding:12px;"><div style="font-weight:700;font-size:14px;color:#e2e2e2;">'+tk+'</div><div style="font-size:11px;color:#555;margin-top:2px;">'+(t.entry_date||'')+' '+(ls?'· '+ls:'')+'</div></td>'+
         '<td style="padding:12px;"><span style="display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;'+db+'">'+(t.direction||'')+'</span></td>'+
-        '<td style="padding:12px;color:#e2e2e2;">'+(t.entry_price||'—')+'</td>'+
-        '<td style="padding:12px;color:#e2e2e2;">'+(t.exit_price||'<span style="color:#444">—</span>')+'</td>'+
+        '<td style="padding:12px;color:#e2e2e2;">'+(t.entry||'—')+'</td>'+
+        '<td style="padding:12px;color:#e2e2e2;">'+(t.exit_price||t.exit||'<span style="color:#444">—</span>')+'</td>'+
         '<td style="padding:12px;color:#e2e2e2;">$'+sz+'</td>'+
         '<td style="padding:12px;'+pc+'">'+ps+'</td>'+
         '<td style="padding:12px;'+pc+'font-size:12px;">'+pp+'</td>'+
@@ -2411,10 +2411,10 @@ function jOpenEdit(id){
   document.getElementById('j-e-dir').value=t.direction||'LONG';
   document.getElementById('j-e-lev').value=t.leverage||'';
   document.getElementById('j-e-date').value=t.entry_date||'';
-  document.getElementById('j-e-entry').value=t.entry_price||'';
-  document.getElementById('j-e-exit').value=t.exit_price||'';
+  document.getElementById('j-e-entry').value=t.entry||'';
+  document.getElementById('j-e-exit').value=t.exit_price||t.exit||'';
   document.getElementById('j-e-size').value=t.size||'';
-  document.getElementById('j-e-sl').value=t.stop_loss||'';
+  document.getElementById('j-e-sl').value=t.stop_loss||t.sl||'';
   document.getElementById('j-e-memo').value=t.memo||'';
   var ee=document.getElementById('j-e-err');if(ee)ee.style.display='none';
 }
