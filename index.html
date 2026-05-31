@@ -499,7 +499,8 @@
   .journal-logout{font-size:11px;color:var(--text3);background:transparent;border:0.5px solid var(--border2);border-radius:6px;padding:4px 10px;cursor:pointer;transition:all 0.15s;}
   .journal-logout:hover{border-color:var(--red2);color:var(--red2);}
   .journal-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;}
-  .journal-stat-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:14px 16px;}
+  .journal-stat-card:hover{border-color:var(--border2);}
+.journal-stat-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:14px 16px;}
   .jsc-label{font-size:10px;color:var(--text3);margin-bottom:6px;}
   .jsc-val{font-size:20px;font-weight:700;font-family:'JetBrains Mono',monospace;}
   .jsc-val.up{color:var(--green);}.jsc-val.dn{color:var(--red2);}.jsc-val.neu{color:var(--text);}
@@ -1046,7 +1047,7 @@
           <input class="journal-input" id="jl-id" type="text" placeholder="팬딩 아이디" autocomplete="username">
           <input class="journal-input" id="jl-pw" type="password" placeholder="비밀번호" autocomplete="current-password" onkeydown="if(event.key==='Enter')journalLogin()">
           <button class="journal-btn" onclick="journalLogin()">로그인</button>
-          <button class="journal-btn-sec" onclick="showJournalRegister()">처음 오셨나요? 가입하기</button>
+          <button class="journal-btn-sec" onclick="showJournalRegister()" style="background:transparent;border:0.5px solid var(--border2);border-radius:10px;padding:11px;color:var(--text3);font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;margin-top:4px;transition:all 0.15s;width:100%;">처음 오셨나요? <span style="color:var(--gold);font-weight:600;">회원가입 →</span></button>
           <div class="journal-error" id="journal-login-error"></div>
         </div>
       </div>
@@ -1078,12 +1079,18 @@
     <div class="journal-stat-grid" id="journal-stats">
       <div class="journal-stat-card">
         <div class="jsc-label">승률</div>
-        <div class="jsc-val neu" id="jstat-wr">—</div>
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:6px;">
+          <div class="jsc-val neu" id="jstat-wr">—</div>
+          <span class="stat-badge neu" id="jstat-wr-badge">—</span>
+        </div>
         <div class="wr-gauge-wrap"><div class="wr-gauge-bar"><div class="wr-gauge-fill" id="jstat-wr-fill" style="width:0%"></div></div></div>
       </div>
       <div class="journal-stat-card">
         <div class="jsc-label">총 손익</div>
-        <div class="jsc-val neu" id="jstat-pnl">—</div>
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+          <div class="jsc-val neu" id="jstat-pnl">—</div>
+          <span class="stat-badge neu" id="jstat-pnl-badge">—</span>
+        </div>
       </div>
       <div class="journal-stat-card">
         <div class="jsc-label">평균 수익률</div>
@@ -1112,6 +1119,10 @@
 
     <!-- 매매 입력 폼 -->
     <div class="journal-form" id="journal-add-form">
+      <div style="background:#0d0d0d;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--text2);line-height:1.75;">
+        <strong style="color:var(--text);">📌 필수 입력:</strong> 날짜 · 종목 · 방향 · 진입가<br>
+        <span style="font-size:11px;color:var(--text3);">청산가 입력 시 수익률% 자동계산 · 투자금액 입력 시 손익금액 자동계산</span>
+      </div>
       <div class="journal-form-title">새 매매 기록</div>
       <div class="jf-grid">
         <div class="jf-field">
@@ -1120,7 +1131,10 @@
         </div>
         <div class="jf-field">
           <div class="jf-label">종목 <span class="jf-req">●</span></div>
-          <input class="jf-input" id="jf-ticker" type="text" placeholder="BTCUSDT">
+          <div style="position:relative;">
+            <input class="jf-input" id="jf-ticker" type="text" placeholder="종목 검색 (예: BTC)" autocomplete="off" oninput="searchTicker(this.value)" onblur="setTimeout(hideTickerDrop,200)">
+            <div id="ticker-drop" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:100;background:var(--bg2);border:0.5px solid var(--border2);border-radius:0 0 8px 8px;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.4);"></div>
+          </div>
         </div>
       </div>
       <div class="jf-label" style="margin-bottom:6px;">방향 <span class="jf-req">●</span></div>
@@ -1135,13 +1149,18 @@
         </div>
         <div class="jf-field">
           <div class="jf-label">투자금액 (USDT)</div>
-          <input class="jf-input" id="jf-amount" type="number" placeholder="선택">
+          <input class="jf-input" id="jf-amount" type="text" placeholder="예: 1,000" oninput="fmtJournalAmount(this)" autocomplete="off">
+          <div id="jf-amount-hint" style="font-size:11px;color:var(--gold);margin-top:3px;font-family:'JetBrains Mono',monospace;min-height:16px;"></div>
         </div>
       </div>
       <div class="jf-grid">
         <div class="jf-field">
           <div class="jf-label">청산가</div>
           <input class="jf-input" id="jf-exit" type="number" placeholder="청산 후 입력">
+        </div>
+        <div class="jf-field">
+          <div class="jf-label">배율 <span style="color:var(--text3);font-size:10px;">선택</span></div>
+          <input class="jf-input" id="jf-leverage" type="number" placeholder="예: 10" min="1" max="125" step="1">
         </div>
         <div class="jf-field">
           <div class="jf-label">메모</div>
@@ -2053,10 +2072,10 @@ checkNewBtcSignal=function(signals){
 // Bear+HiddenBear → 하락 다이버전스
 // ══════════════════════════════════════════════
 // sigMap에 rsi_bull/rsi_hidden_bull 매핑 추가
-sigMap['rsi_bull']        = {label:'상승 다이버전스', cls:'sig-rsi'};
-sigMap['rsi_hidden_bull'] = {label:'상승 다이버전스', cls:'sig-rsi'};
-sigMap['rsi_bear']        = {label:'하락 다이버전스', cls:'sig-rsi'};
-sigMap['rsi_hidden_bear'] = {label:'하락 다이버전스', cls:'sig-rsi'};
+sigMap['rsi_bull']        = {label:'상승 다이버전스', cls:'sig-rsi-bull'};
+sigMap['rsi_hidden_bull'] = {label:'숨은 상승 다이버전스', cls:'sig-rsi-bull'};
+sigMap['rsi_bear']        = {label:'하락 다이버전스', cls:'sig-rsi-bear-badge'};
+sigMap['rsi_hidden_bear'] = {label:'숨은 하락 다이버전스', cls:'sig-rsi-bear-badge'};
 
 // ══════════════════════════════════════════════
 // switchTab 확장 - 매매일지 탭
