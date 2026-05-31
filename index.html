@@ -1985,7 +1985,7 @@ function journalLogin(){
   fetch(TRADE_API+'/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:id,password:pw})})
     .then(function(r){return r.json();})
     .then(function(d){
-      if(d.ok){
+      if(d.ok||d.msg==='로그인 성공'){
         journalUser=id;journalPw=pw;
         localStorage.setItem('journal_user',id);
         localStorage.setItem('journal_pw',pw);
