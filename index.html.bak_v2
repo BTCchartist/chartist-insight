@@ -581,108 +581,6 @@
   #scroll-top-btn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
   @media(max-width:520px){#scroll-top-btn{bottom:20px;right:16px;width:38px;height:38px;}}
 
-
-  /* ══ [v2] 매매일지 개선 CSS ══ */
-  /* 스피너 화살표 숨기기 */
-  input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
-  input[type=number] { -moz-appearance:textfield; }
-
-  /* 연승/연패 폰트 통일 */
-  .jsc-val { font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:700; letter-spacing:-0.5px; }
-  .jsc-val.up { color:var(--green); }
-  .jsc-val.dn { color:var(--red); }
-  .jsc-val.neu { color:var(--text3); }
-
-  /* 인사이트 박스 (자산제곱 벤치마킹) */
-  .insight-box {
-    background:#0d0d0d;
-    border-left:3px solid var(--gold);
-    border-radius:0 8px 8px 0;
-    padding:10px 14px;
-    margin:8px 0;
-    font-size:12px;
-    color:var(--text2);
-    line-height:1.75;
-  }
-  .insight-box strong { color:var(--text); }
-
-  /* 상태 배지 (자산제곱 벤치마킹) */
-  .stat-badge {
-    display:inline-flex;align-items:center;
-    font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:700;
-    padding:3px 8px;border-radius:4px;letter-spacing:.04em;
-    text-transform:uppercase;white-space:nowrap;
-  }
-  .stat-badge.green { background:rgba(76,175,125,0.15);color:var(--green);border:1px solid rgba(76,175,125,0.3); }
-  .stat-badge.red   { background:rgba(224,85,85,0.15);color:var(--red2);border:1px solid rgba(224,85,85,0.3); }
-  .stat-badge.gold  { background:rgba(201,168,76,0.12);color:var(--gold);border:1px solid rgba(201,168,76,0.3); }
-  .stat-badge.neu   { background:rgba(255,255,255,0.05);color:var(--text3);border:1px solid rgba(255,255,255,0.1); }
-
-  /* 히어로 카드 개선 (자산제곱 벤치마킹) */
-  .market-card { position:relative; transition:border-color 0.2s; }
-  .market-card:hover { border-color:rgba(201,168,76,0.3); }
-  .mc-desc { font-size:10px;color:var(--text3);margin-top:6px;padding-top:6px;border-top:0.5px solid var(--border); }
-
-  /* 매매일지 통계 카드 개선 */
-  .jstat-card {
-    background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;
-    padding:16px;transition:border-color 0.2s;
-  }
-  .jstat-card:hover { border-color:var(--border2); }
-  .jstat-label { font-size:11px;color:var(--text3);margin-bottom:8px;font-weight:500; }
-  .jstat-val-wrap { display:flex;align-items:flex-end;justify-content:space-between; }
-  .jstat-val { font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:-0.5px; }
-
-  /* 승률 게이지 개선 */
-  .wr-gauge-wrap { margin-top:8px; }
-  .wr-gauge-bg { height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden; }
-  .wr-gauge-fill { height:100%;border-radius:2px;transition:width 0.5s ease;background:var(--green); }
-
-  /* 자동완성 드롭다운 */
-  .ticker-autocomplete {
-    position:absolute;top:100%;left:0;right:0;z-index:100;
-    background:var(--bg2);border:0.5px solid var(--border2);
-    border-radius:0 0 8px 8px;max-height:200px;overflow-y:auto;
-  }
-  .ticker-autocomplete-item {
-    padding:8px 12px;font-size:12px;cursor:pointer;
-    display:flex;align-items:center;justify-content:space-between;
-    border-bottom:0.5px solid var(--border);transition:background 0.1s;
-  }
-  .ticker-autocomplete-item:hover { background:rgba(201,168,76,0.08); }
-  .ticker-autocomplete-item:last-child { border-bottom:none; }
-  .tac-symbol { color:var(--text);font-weight:500; }
-  .tac-name { color:var(--text3);font-size:11px; }
-  .ticker-input-wrap { position:relative; }
-
-  /* 매매 수정 폼 */
-  .journal-edit-form {
-    background:var(--bg3);border:0.5px solid var(--border2);
-    border-radius:10px;padding:14px;margin-top:8px;
-  }
-
-  /* RSI 다이버전스 색상 */
-  .sig-rsi-bull { background:rgba(224,85,85,0.12);color:#ff6b6b; }
-  .sig-rsi-bear-badge { background:rgba(74,158,255,0.12);color:var(--blue); }
-
-  /* 달력 인풋 개선 */
-  input[type=date] {
-    background:var(--bg3);border:0.5px solid var(--border2);
-    border-radius:8px;padding:var(--pad-input);color:var(--text);
-    font-family:'JetBrains Mono',monospace;font-size:var(--fs-md);
-    width:100%;transition:border-color 0.15s;
-    -webkit-appearance:none;
-    color-scheme:dark;
-  }
-  input[type=date]:focus { outline:none;border-color:var(--gold); }
-  input[type=date]::-webkit-calendar-picker-indicator {
-    filter:invert(0.6);cursor:pointer;
-  }
-
-  /* 천단위 구분 힌트 */
-  .amount-hint { font-size:11px;color:var(--gold);margin-top:3px;font-family:'JetBrains Mono',monospace; }
-
 </style>
 </head>
 <body id="body">
@@ -729,7 +627,6 @@
     <div class="mc-label">BTC / USDT</div>
     <div class="mc-price" id="btc-price">—</div>
     <div class="mc-change" id="btc-change">연결 중...</div>
-    <div class="mc-desc">바이낸스 실시간 · USDT 기준</div>
   </div>
   <div class="market-card">
     <div class="mc-label">공포 &amp; 탐욕 지수</div>
@@ -2205,10 +2102,9 @@ function renderJournalStats(){
   var strkEl=document.getElementById('jstat-streak');
   if(wrEl){wrEl.textContent=closed.length>0?wr+'%':'—';wrEl.className='jsc-val '+(wr>=50?'up':(closed.length>0?'dn':'neu'));}
   if(fillEl)fillEl.style.width=wr+'%';
-  if(pnlEl){var pnlFmt=totalPnl.toLocaleString('ko-KR',{minimumFractionDigits:2,maximumFractionDigits:2});pnlEl.textContent=closed.length>0?(totalPnl>=0?'+':'')+pnlFmt+' USDT':'—';pnlEl.className='jsc-val '+(totalPnl>0?'up':totalPnl<0?'dn':'neu');}
+  if(pnlEl){pnlEl.textContent=closed.length>0?(totalPnl>=0?'+':'')+totalPnl.toFixed(2)+' USDT':'—';pnlEl.className='jsc-val '+(totalPnl>0?'up':totalPnl<0?'dn':'neu');}
   if(avgEl){avgEl.textContent=closed.length>0?(avgPct>=0?'+':'')+avgPct.toFixed(2)+'%':'—';avgEl.className='jsc-val '+(avgPct>0?'up':avgPct<0?'dn':'neu');}
-  if(strkEl){strkEl.textContent=streak>0?(streakType==='win'?streak+'연승':streak+'연패'):'—';if(strkEl){strkEl.className='jsc-val '+(streak>0&&streakType==='win'?'up':'dn');}}
-  updateStatBadges(wr, totalPnl);
+  if(strkEl){strkEl.textContent=streak>0?(streakType==='win'?'✅ '+streak+'연승':'❌ '+streak+'연패'):'—';}
 
   // 월별 차트
   renderMonthChart();
@@ -2283,7 +2179,7 @@ function journalAdd(){
   var date=(document.getElementById('jf-date').value||'').trim();
   var ticker=(document.getElementById('jf-ticker').value||'').trim().toUpperCase();
   var entry=document.getElementById('jf-entry').value;
-  var amountEl=document.getElementById('jf-amount');var amount=amountEl.getAttribute('data-raw')||amountEl.value.replace(/[^0-9.]/g,'');
+  var amount=document.getElementById('jf-amount').value;
   var exitP=document.getElementById('jf-exit').value;
   var memo=(document.getElementById('jf-memo').value||'').trim();
   var err=document.getElementById('journal-add-error');
@@ -2363,7 +2259,7 @@ function renderJournalList(){
 }
 
 function journalCloseModal(id){
-  var exitP=prompt('청산가를 입력하세요 (숫자만):');
+  var exitP=prompt('청산가를 입력하세요:');
   if(!exitP)return;
   fetch(TRADE_API+'/update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:journalUser,password:journalPw,id:id,exit:parseFloat(exitP)})})
     .then(function(r){return r.json();})
