@@ -2117,7 +2117,7 @@ async function journalLogin(){
     var res=await fetch(TRADE_API+'/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:username,password})});
     var data=await res.json();
     if(!res.ok||data.error){jShowErr('j-login-err',data.error||'로그인 실패');return;}
-    jToken=data.token;jUser=username;
+    jToken=username+'|||'+password;jUser=username;
     localStorage.setItem('j_token',jToken);localStorage.setItem('j_user',jUser);
     jShowMain();
   }catch(e){jShowErr('j-login-err','서버 연결 오류');}
@@ -2166,7 +2166,7 @@ function initJournal(){
 async function loadJournalTrades(){
   if(!jToken)return;
   try{
-    var res=await fetch(TRADE_API+'/list',{headers:{'Authorization':'Bearer '+jToken}});
+    var parts=jToken.split('|||');var res=await fetch(TRADE_API+'/list',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:parts[0],password:parts[1]})});
     if(res.status===401){journalLogout();return;}
     if(!res.ok)throw new Error(res.status);
     var data=await res.json();
