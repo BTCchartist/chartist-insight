@@ -1412,7 +1412,7 @@ function filterAltcoin(f){
     if(!rsiUnlocked){
       if(content)content.classList.add('blurred');
       if(paywall)paywall.classList.remove('show');
-      if(wrap)wrap.onclick=function(){if(!rsiUnlocked){lockRsi();}};
+      if(content)content.onclick=function(){lockRsi();};
     }else{
       if(content)content.classList.remove('blurred');
       if(paywall)paywall.classList.remove('show');
