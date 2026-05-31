@@ -1049,7 +1049,7 @@
     </div>
   </div>
 
-  <div class="journal-main" id="journal-main">
+  <div class="journal-main" id="journal-main" style="display:none;">
 
 <!-- ══ 매뉴얼 팝업 ══ -->
 <div class="manual-overlay" id="manual-overlay">
@@ -2032,7 +2032,7 @@ function journalLogout(){
   localStorage.removeItem('journal_pw');
   var main=document.getElementById('journal-main');
   var loginWrap=document.getElementById('j-auth-screen');
-  if(main)main.classList.remove('show');
+  if(main){main.classList.remove('show');main.style.display='none';}
   if(loginWrap)loginWrap.style.display='';
   showJournalLogin();
 }
@@ -2041,7 +2041,7 @@ function showJournalMain(){
   var loginWrap=document.getElementById('j-auth-screen');
   var main=document.getElementById('journal-main');
   if(loginWrap)loginWrap.style.display='none';
-  if(main)main.classList.add('show');
+  if(main){main.classList.add('show');main.style.display='block';}
   var unEl=document.getElementById('journal-username');
   if(unEl)unEl.textContent=journalUser;
   // 오늘 날짜 기본값
