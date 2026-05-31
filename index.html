@@ -2087,236 +2087,315 @@ switchTab=function(tab,btn){
   if(tab==='journal'){initJournal();}
 };
 
-// ══ 매매일지 v3 ══
+// ══════════════════════════════════════════════
+// 매매일지
+// ══════════════════════════════════════════════
 var TRADE_API='https://chartist-insight.com/trade';
-var jToken=localStorage.getItem('j_token')||'';
-var jUser=localStorage.getItem('j_user')||'';
-var jAllTrades=[];
-var jCurFilter='all';
-var jDDIdx=-1;
-var JFUTURES=['BTCUSDT','ETHUSDT','SOLUSDT','XRPUSDT','BNBUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT','DOTUSDT','LINKUSDT','UNIUSDT','LTCUSDT','NEARUSDT','OPUSDT','ARBUSDT','SEIUSDT','SUIUSDT','INJUSDT','PEPEUSDT','FLOKIUSDT','BONKUSDT','WIFUSDT','JUPUSDT','RENDERUSDT','FETUSDT','STXUSDT','KASUSDT','TONUSDT','NOTUSDT','HYPEUSDT','VIRTUALUSDT','TRXUSDT','XLMUSDT','VETUSDT','FILUSDT','ICPUSDT','AAVEUSDT','MKRUSDT','CRVUSDT','LDOUSDT'];
-
-function jShowErr(id,msg){var el=document.getElementById(id);if(!el)return;el.textContent=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},4000);}
-function jFmtN(input){var raw=String(input.value).replace(/,/g,'');if(!raw||raw==='-')return;var n=parseFloat(raw);if(!isNaN(n)){var p=raw.split('.');input.value=parseInt(p[0]).toLocaleString('en-US')+(p[1]!==undefined?'.'+p[1]:'');}}
-function jPN(s){if(!s)return null;var n=parseFloat(String(s).replace(/,/g,''));return isNaN(n)?null:n;}
-function jFmt(n){if(n===null||n===undefined||n==='')return'—';return Number(String(n).replace(/,/g,'')).toLocaleString('en-US',{maximumFractionDigits:8});}
-
-function jSwitchAuthTab(tab){
-  document.getElementById('j-login-form').style.display=tab==='login'?'':'none';
-  document.getElementById('j-reg-form').style.display=tab==='register'?'':'none';
-  var tl=document.getElementById('j-tab-login');var tr=document.getElementById('j-tab-reg');
-  if(tl){tl.style.borderBottomColor=tab==='login'?'#C9A84C':'transparent';tl.style.color=tab==='login'?'#C9A84C':'#777';}
-  if(tr){tr.style.borderBottomColor=tab==='register'?'#C9A84C':'transparent';tr.style.color=tab==='register'?'#C9A84C':'#777';}
-}
-
-async function journalLogin(){
-  var username=(document.getElementById('j-username').value||'').trim();
-  var password=document.getElementById('j-password').value||'';
-  if(!username||!password){jShowErr('j-login-err','아이디와 비밀번호를 입력해주세요');return;}
-  try{
-    var res=await fetch(TRADE_API+'/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:username,password})});
-    var data=await res.json();
-    if(!res.ok||data.error){jShowErr('j-login-err',data.error||'로그인 실패');return;}
-    jToken=username+'|||'+password;jUser=username;
-    localStorage.setItem('j_token',jToken);localStorage.setItem('j_user',jUser);
-    jShowMain();
-  }catch(e){jShowErr('j-login-err','서버 연결 오류');}
-}
-
-async function journalRegister(){
-  var username=(document.getElementById('j-reg-username').value||'').trim();
-  var fanding_id=(document.getElementById('j-reg-fanding').value||'').trim();
-  var password=document.getElementById('j-reg-pw').value||'';
-  var pw2=document.getElementById('j-reg-pw2').value||'';
-  if(!username||!password||!fanding_id){jShowErr('j-reg-err','모든 필드를 입력해주세요');return;}
-  if(username.length<4){jShowErr('j-reg-err','아이디는 4자 이상');return;}
-  if(password.length<8){jShowErr('j-reg-err','비밀번호는 8자 이상');return;}
-  if(password!==pw2){jShowErr('j-reg-err','비밀번호 불일치');return;}
-  try{
-    var res=await fetch(TRADE_API+'/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:fanding_id,password,username})});
-    var data=await res.json();
-    if(!res.ok||data.error){jShowErr('j-reg-err',data.error||'가입 실패');return;}
-    alert('가입 완료! 로그인해주세요.');
-    jSwitchAuthTab('login');
-    document.getElementById('j-username').value=username;
-  }catch(e){jShowErr('j-reg-err','서버 연결 오류');}
-}
-
-function journalLogout(){
-  jToken='';jUser='';localStorage.removeItem('j_token');localStorage.removeItem('j_user');
-  jAllTrades=[];
-  document.getElementById('j-auth-screen').style.display='';
-  document.getElementById('j-main-screen').style.display='none';
-}
-
-function jShowMain(){
-  document.getElementById('j-auth-screen').style.display='none';
-  document.getElementById('j-main-screen').style.display='';
-  document.getElementById('j-user-label').textContent=jUser+' 님의 매매일지';
-  var today=new Date().toISOString().split('T')[0];
-  var d=document.getElementById('j-edate');if(d&&!d.value)d.value=today;
-  loadJournalTrades();
-}
+var journalUser=null;
+var journalPw=null;
+var journalTrades=[];
+var journalFilter='all';
+var journalDir='long';
+var journalFormOpen=false;
 
 function initJournal(){
-  if(jToken&&jUser)jShowMain();
-  else{document.getElementById('j-auth-screen').style.display='';document.getElementById('j-main-screen').style.display='none';}
-}
-
-async function loadJournalTrades(){
-  if(!jToken)return;
-  try{
-    var parts=jToken.split('|||');var res=await fetch(TRADE_API+'/list',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:parts[0],password:parts[1]})});
-    if(res.status===401){journalLogout();return;}
-    if(!res.ok)throw new Error(res.status);
-    var data=await res.json();
-    jAllTrades=Array.isArray(data.trades)?data.trades:[];
-    renderJournalStats();renderJournalList();
-  }catch(e){
-    console.error('[journal]',e);
-    jAllTrades=[];renderJournalStats();renderJournalList();
+  var saved=localStorage.getItem('journal_user');
+  var savedPw=localStorage.getItem('journal_pw');
+  if(saved&&savedPw){
+    journalUser=saved;journalPw=savedPw;
+    loadJournalTrades();
+    showJournalMain();
   }
 }
 
+function showJournalLogin(){
+  document.getElementById('journal-form-login').style.display='block';
+  document.getElementById('journal-form-register').style.display='none';
+}
+function showJournalRegister(){
+  document.getElementById('journal-form-login').style.display='none';
+  document.getElementById('journal-form-register').style.display='block';
+}
+
+function journalLogin(){
+  var id=(document.getElementById('jl-id').value||'').trim();
+  var pw=(document.getElementById('jl-pw').value||'').trim();
+  var err=document.getElementById('journal-login-error');
+  if(!id||!pw){if(err){err.textContent='아이디와 비번을 입력해주세요.';err.classList.add('show');}return;}
+  fetch(TRADE_API+'/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:id,password:pw})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.ok){
+        journalUser=id;journalPw=pw;
+        localStorage.setItem('journal_user',id);
+        localStorage.setItem('journal_pw',pw);
+        loadJournalTrades();
+        showJournalMain();
+        if(err)err.classList.remove('show');
+      }else{
+        if(err){err.textContent=d.msg||'로그인 실패';err.classList.add('show');}
+      }
+    })
+    .catch(function(){if(err){err.textContent='서버 연결 오류';err.classList.add('show');}});
+}
+
+function journalRegister(){
+  var id=(document.getElementById('jr-id').value||'').trim();
+  var pw=(document.getElementById('jr-pw').value||'').trim();
+  var pw2=(document.getElementById('jr-pw2').value||'').trim();
+  var err=document.getElementById('journal-register-error');
+  if(!id||!pw){if(err){err.textContent='아이디와 비번을 입력해주세요.';err.classList.add('show');}return;}
+  if(pw!==pw2){if(err){err.textContent='비밀번호가 일치하지 않습니다.';err.classList.add('show');}return;}
+  if(pw.length<4){if(err){err.textContent='비밀번호는 4자 이상이어야 합니다.';err.classList.add('show');}return;}
+  fetch(TRADE_API+'/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:id,password:pw})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.ok){
+        journalUser=id;journalPw=pw;
+        localStorage.setItem('journal_user',id);
+        localStorage.setItem('journal_pw',pw);
+        journalTrades=[];
+        showJournalMain();
+        if(err)err.classList.remove('show');
+      }else{
+        if(err){err.textContent=d.msg||'가입 실패';err.classList.add('show');}
+      }
+    })
+    .catch(function(){if(err){err.textContent='서버 연결 오류';err.classList.add('show');}});
+}
+
+function journalLogout(){
+  journalUser=null;journalPw=null;journalTrades=[];
+  localStorage.removeItem('journal_user');
+  localStorage.removeItem('journal_pw');
+  var main=document.getElementById('journal-main');
+  var loginWrap=document.getElementById('journal-login-wrap');
+  if(main)main.classList.remove('show');
+  if(loginWrap)loginWrap.style.display='flex';
+  showJournalLogin();
+}
+
+function showJournalMain(){
+  var loginWrap=document.getElementById('journal-login-wrap');
+  var main=document.getElementById('journal-main');
+  if(loginWrap)loginWrap.style.display='none';
+  if(main)main.classList.add('show');
+  var unEl=document.getElementById('journal-username');
+  if(unEl)unEl.textContent=journalUser;
+  // 오늘 날짜 기본값
+  var dateEl=document.getElementById('jf-date');
+  if(dateEl){
+    var now=new Date();
+    var y=now.getFullYear();
+    var m=String(now.getMonth()+1).padStart(2,'0');
+    var d=String(now.getDate()).padStart(2,'0');
+    dateEl.value=y+'-'+m+'-'+d;
+  }
+}
+
+function loadJournalTrades(){
+  if(!journalUser||!journalPw)return;
+  fetch(TRADE_API+'/list',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:journalUser,password:journalPw})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.ok){journalTrades=d.trades||[];renderJournalStats();renderJournalList();}
+    })
+    .catch(function(){});
+}
+
 function renderJournalStats(){
-  try{
-    var closed=(jAllTrades||[]).filter(function(t){return t&&t.status==='closed';});
-    var wins=closed.filter(function(t){return(parseFloat(t.pnl)||0)>0;});
-    var totalPnl=closed.reduce(function(s,t){return s+(parseFloat(t.pnl)||0);},0);
-    var wr=closed.length>0?Math.round(wins.length/closed.length*100):0;
-    var openN=(jAllTrades||[]).filter(function(t){return t&&t.status==='open';}).length;
-    var pnlC=totalPnl>0?'#26a642':totalPnl<0?'#e2534a':'#e2e2e2';
-    var pnlS=(totalPnl>0?'+':'')+'$'+Math.abs(totalPnl).toLocaleString('en-US',{maximumFractionDigits:1});
-    var wrC=wr>=50?'#26a642':'#e2534a';
-    document.getElementById('j-stat-grid').innerHTML=
-      '<div style="background:#1a1a1a;border:1px solid #242424;border-top:2px solid #C9A84C;border-radius:10px;padding:16px;"><div style="font-size:10px;color:#777;text-transform:uppercase;margin-bottom:8px;">총 매매</div><div style="font-size:22px;font-weight:700;">'+jAllTrades.length+'</div><div style="font-size:11px;color:#777;margin-top:6px;">오픈 '+openN+'건</div></div>'+
-      '<div style="background:#1a1a1a;border:1px solid #242424;border-top:2px solid '+wrC+';border-radius:10px;padding:16px;"><div style="font-size:10px;color:#777;text-transform:uppercase;margin-bottom:8px;">승률</div><div style="font-size:22px;font-weight:700;color:'+wrC+';">'+wr+'%</div><div style="font-size:11px;color:#777;margin-top:6px;">'+wins.length+'승 '+(closed.length-wins.length)+'패</div></div>'+
-      '<div style="background:#1a1a1a;border:1px solid #242424;border-top:2px solid '+pnlC+';border-radius:10px;padding:16px;"><div style="font-size:10px;color:#777;text-transform:uppercase;margin-bottom:8px;">총 손익</div><div style="font-size:22px;font-weight:700;color:'+pnlC+';">'+pnlS+'</div><div style="font-size:11px;color:#777;margin-top:6px;">청산 '+closed.length+'건</div></div>'+
-      '<div style="background:#1a1a1a;border:1px solid #242424;border-top:2px solid #C9A84C;border-radius:10px;padding:16px;"><div style="font-size:10px;color:#777;text-transform:uppercase;margin-bottom:8px;">평균 RR</div><div style="font-size:22px;font-weight:700;">—</div><div style="font-size:11px;color:#777;margin-top:6px;">집계 중</div></div>';
-  }catch(e){console.error('[journal stats]',e);}
+  var closed=journalTrades.filter(function(t){return t.status==='closed'&&t.pnl_pct!==null;});
+  var wins=closed.filter(function(t){return t.pnl_pct>0;});
+  var wr=closed.length>0?Math.round(wins.length/closed.length*100):0;
+  var totalPnl=closed.reduce(function(s,t){return s+(t.pnl_amount||0);},0);
+  var avgPct=closed.length>0?closed.reduce(function(s,t){return s+(t.pnl_pct||0);},0)/closed.length:0;
+  // 연속 승패
+  var streak=0,streakType='';
+  for(var i=0;i<closed.length;i++){
+    var w=closed[i].pnl_pct>0;
+    if(i===0){streak=1;streakType=w?'win':'lose';}
+    else if((w&&streakType==='win')||(!w&&streakType==='lose')){streak++;}
+    else break;
+  }
+  var wrEl=document.getElementById('jstat-wr');
+  var fillEl=document.getElementById('jstat-wr-fill');
+  var pnlEl=document.getElementById('jstat-pnl');
+  var avgEl=document.getElementById('jstat-avg');
+  var strkEl=document.getElementById('jstat-streak');
+  if(wrEl){wrEl.textContent=closed.length>0?wr+'%':'—';wrEl.className='jsc-val '+(wr>=50?'up':(closed.length>0?'dn':'neu'));}
+  if(fillEl)fillEl.style.width=wr+'%';
+  if(pnlEl){var pnlFmt=totalPnl.toLocaleString('ko-KR',{minimumFractionDigits:2,maximumFractionDigits:2});pnlEl.textContent=closed.length>0?(totalPnl>=0?'+':'')+pnlFmt+' USDT':'—';pnlEl.className='jsc-val '+(totalPnl>0?'up':totalPnl<0?'dn':'neu');}
+  if(avgEl){avgEl.textContent=closed.length>0?(avgPct>=0?'+':'')+avgPct.toFixed(2)+'%':'—';avgEl.className='jsc-val '+(avgPct>0?'up':avgPct<0?'dn':'neu');}
+  if(strkEl){strkEl.textContent=streak>0?(streakType==='win'?streak+'연승':streak+'연패'):'—';if(strkEl){strkEl.className='jsc-val '+(streak>0&&streakType==='win'?'up':'dn');}}
+  updateStatBadges(wr, totalPnl);
+
+  // 월별 차트
+  renderMonthChart();
+
+  // 종목별 승률
+  renderTickerWr();
 }
 
-function renderJournalList(){
-  try{
-    var tbody=document.getElementById('j-tbody');if(!tbody)return;
-    var trades=(jAllTrades||[]).filter(function(t){return!!t;});
-    if(jCurFilter==='open')trades=trades.filter(function(t){return t.status==='open';});
-    else if(jCurFilter==='closed')trades=trades.filter(function(t){return t.status==='closed';});
-    else if(jCurFilter==='LONG')trades=trades.filter(function(t){return t.direction==='LONG';});
-    else if(jCurFilter==='SHORT')trades=trades.filter(function(t){return t.direction==='SHORT';});
-    trades.sort(function(a,b){return(b.entry_date||'').localeCompare(a.entry_date||'');});
-    var el=document.getElementById('j-trade-count');if(el)el.textContent=trades.length+'건';
-    if(!trades.length){tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:60px;color:#555;">매매 기록이 없습니다</td></tr>';return;}
-    tbody.innerHTML=trades.map(function(t){
-      var pnl=parseFloat(t.pnl)||0;
-      var pc=pnl>0?'#26a642':pnl<0?'#e2534a':'#777';
-      var ps=pnl!==0?(pnl>0?'+':'')+'$'+Math.abs(pnl).toLocaleString('en-US',{maximumFractionDigits:1}):'—';
-      var size=parseFloat(t.size)||0;
-      var pct=size>0&&pnl!==0?(pnl>0?'+':'')+(pnl/size*100).toFixed(1)+'%':'—';
-      var ticker=(t.ticker||t.symbol||'').toUpperCase();
-      var levS=t.leverage?String(t.leverage).toLowerCase().includes('x')?t.leverage:t.leverage+'x':'';
-      var dirC=t.direction==='LONG'?'background:rgba(38,166,66,0.15);color:#26a642':'background:rgba(226,83,74,0.15);color:#e2534a';
-      var stC=t.status==='open'?'background:rgba(201,168,76,0.1);color:#C9A84C;border:1px solid rgba(201,168,76,0.3)':'background:#1e1e1e;color:#777';
-      var id=t.id||t._id||'';
-      return'<tr style="border-bottom:1px solid #1a1a1a;">'+
-        '<td style="padding:12px;"><div style="font-weight:700;font-size:14px;">'+ticker+'</div><div style="font-size:11px;color:#777;margin-top:2px;">'+(t.entry_date||'')+' '+(levS?'· '+levS:'')+'</div></td>'+
-        '<td style="padding:12px;"><span style="display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;'+dirC+'">'+t.direction+'</span></td>'+
-        '<td style="padding:12px;">'+jFmt(t.entry_price)+'</td>'+
-        '<td style="padding:12px;">'+(t.exit_price?jFmt(t.exit_price):'<span style="color:#444">—</span>')+'</td>'+
-        '<td style="padding:12px;">$'+jFmt(size)+'</td>'+
-        '<td style="padding:12px;color:'+pc+';font-weight:700;">'+ps+'</td>'+
-        '<td style="padding:12px;color:'+pc+';font-size:12px;">'+pct+'</td>'+
-        '<td style="padding:12px;"><span style="display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;'+stC+'">'+(t.status==='open'?'오픈':'청산')+'</span></td>'+
-        '<td style="padding:12px;"><button onclick="jOpenEdit(''+id+'')" style="background:none;border:1px solid #242424;border-radius:5px;color:#777;font-size:12px;padding:4px 8px;cursor:pointer;">✎</button></td>'+
-      '</tr>';
-    }).join('');
-  }catch(e){console.error('[journal list]',e);}
-}
-
-function jFilter(f,btn){
-  jCurFilter=f;
-  document.querySelectorAll('#j-filter-row button').forEach(function(b){
-    b.style.borderColor='#242424';b.style.color='#777';b.style.background='transparent';
+function renderMonthChart(){
+  var el=document.getElementById('journal-month-chart');
+  if(!el)return;
+  var closed=journalTrades.filter(function(t){return t.status==='closed'&&t.pnl_amount!==null;});
+  var monthMap={};
+  closed.forEach(function(t){
+    var d=t.date||'';
+    if(d.length>=7){var m=d.substring(0,7);monthMap[m]=(monthMap[m]||0)+t.pnl_amount;}
   });
-  if(btn){btn.style.borderColor='#C9A84C';btn.style.color='#C9A84C';btn.style.background='rgba(201,168,76,0.12)';}
+  var months=Object.keys(monthMap).sort().slice(-6);
+  if(months.length===0){el.innerHTML='<div style="font-size:11px;color:var(--text3);padding:16px;">데이터 없음</div>';return;}
+  var maxAbs=Math.max.apply(null,months.map(function(m){return Math.abs(monthMap[m]);}));
+  if(maxAbs===0)maxAbs=1;
+  var html='';
+  months.forEach(function(m){
+    var v=monthMap[m];
+    var h=Math.max(4,Math.round(Math.abs(v)/maxAbs*56));
+    var cls=v>=0?'up':'dn';
+    var lbl=m.substring(5);
+    html+='<div class="month-bar-wrap"><div class="month-bar '+cls+'" style="height:'+h+'px;"></div><div class="month-lbl">'+lbl+'</div></div>';
+  });
+  el.innerHTML=html;
+}
+
+function renderTickerWr(){
+  var wrap=document.getElementById('journal-ticker-wr-wrap');
+  var list=document.getElementById('journal-ticker-wr');
+  if(!wrap||!list)return;
+  var closed=journalTrades.filter(function(t){return t.status==='closed'&&t.pnl_pct!==null;});
+  var tickerMap={};
+  closed.forEach(function(t){
+    var tk=t.ticker||'—';
+    if(!tickerMap[tk])tickerMap[tk]={win:0,total:0};
+    tickerMap[tk].total++;
+    if(t.pnl_pct>0)tickerMap[tk].win++;
+  });
+  var tickers=Object.keys(tickerMap).filter(function(k){return tickerMap[k].total>=1;});
+  if(tickers.length===0){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  tickers.sort(function(a,b){return tickerMap[b].win/tickerMap[b].total-tickerMap[a].win/tickerMap[a].total;});
+  var html='';
+  tickers.slice(0,8).forEach(function(tk){
+    var wr=Math.round(tickerMap[tk].win/tickerMap[tk].total*100);
+    html+='<div class="ticker-wr-item"><div class="twr-name">'+tk+'</div><div class="twr-bar-wrap"><div class="twr-bar-fill" style="width:'+wr+'%"></div></div><div class="twr-pct">'+wr+'%</div></div>';
+  });
+  list.innerHTML=html;
+}
+
+function setJournalDir(dir){
+  journalDir=dir;
+  var longBtn=document.getElementById('jf-long-btn');
+  var shortBtn=document.getElementById('jf-short-btn');
+  if(longBtn)longBtn.className='jf-dir-btn long'+(dir==='long'?' active':'');
+  if(shortBtn)shortBtn.className='jf-dir-btn short'+(dir==='short'?' active':'');
+}
+
+function toggleJournalForm(){
+  journalFormOpen=!journalFormOpen;
+  var form=document.getElementById('journal-add-form');
+  if(form)form.classList.toggle('show',journalFormOpen);
+}
+
+function journalAdd(){
+  var date=(document.getElementById('jf-date').value||'').trim();
+  var ticker=(document.getElementById('jf-ticker').value||'').trim().toUpperCase();
+  var entry=document.getElementById('jf-entry').value;
+  var amountEl=document.getElementById('jf-amount');var amount=amountEl.getAttribute('data-raw')||amountEl.value.replace(/[^0-9.]/g,'');
+  var exitP=document.getElementById('jf-exit').value;
+  var memo=(document.getElementById('jf-memo').value||'').trim();
+  var err=document.getElementById('journal-add-error');
+  if(!date||!ticker||!entry){if(err){err.textContent='날짜, 종목, 진입가는 필수입니다.';err.classList.add('show');}return;}
+  var body={fanding_id:journalUser,password:journalPw,date:date,ticker:ticker,direction:journalDir,entry:parseFloat(entry)};
+  if(amount)body.amount=parseFloat(amount);
+  if(exitP)body.exit=parseFloat(exitP);
+  if(memo)body.memo=memo;
+  fetch(TRADE_API+'/add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.ok){
+        journalTrades.unshift(d.trade);
+        try{renderJournalStats();renderJournalList();}catch(e){console.error('render err:',e);}
+        // 입력 초기화
+        document.getElementById('jf-ticker').value='';
+        document.getElementById('jf-entry').value='';
+        document.getElementById('jf-amount').value='';
+        document.getElementById('jf-exit').value='';
+        document.getElementById('jf-memo').value='';
+        toggleJournalForm();
+        if(err)err.classList.remove('show');
+      }else{if(err){err.textContent=d.msg||'저장 실패';err.classList.add('show');}}
+    })
+    .catch(function(){if(err){err.textContent='서버 연결 오류';err.classList.add('show');}});
+}
+
+function setJournalFilter(f){
+  journalFilter=f;
+  ['all','open','win','lose'].forEach(function(v){
+    var btn=document.getElementById('jf-'+v);
+    if(btn)btn.classList.toggle('active',v===f);
+  });
   renderJournalList();
 }
 
-function jSearchTicker(val){
-  var dd=document.getElementById('j-ticker-dd');if(!dd)return;
-  jDDIdx=-1;
-  var q=val.trim().toUpperCase();
-  if(!q){dd.style.display='none';return;}
-  var m=JFUTURES.filter(function(s){return s.startsWith(q)||s.includes(q);}).slice(0,8);
-  if(!m.length){dd.style.display='none';return;}
-  dd.innerHTML=m.map(function(s){
-    return'<div onmousedown="jPickTicker(''+s+'')" style="padding:9px 14px;font-size:13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222;">'+s+'<span style="font-size:10px;color:#777;background:#2a2a2a;padding:1px 6px;border-radius:10px;">선물</span></div>';
-  }).join('');
-  dd.style.display='block';
-}
-function jCloseDD(){var dd=document.getElementById('j-ticker-dd');if(dd)dd.style.display='none';}
-function jPickTicker(v){var i=document.getElementById('j-ticker-input');if(i)i.value=v;jCloseDD();}
-function jTickerKey(e){
-  var dd=document.getElementById('j-ticker-dd');
-  if(!dd||dd.style.display==='none')return;
-  var items=dd.querySelectorAll('div');if(!items.length)return;
-  if(e.key==='ArrowDown'){e.preventDefault();jDDIdx=Math.min(jDDIdx+1,items.length-1);}
-  else if(e.key==='ArrowUp'){e.preventDefault();jDDIdx=Math.max(jDDIdx-1,0);}
-  else if(e.key==='Enter'){e.preventDefault();if(jDDIdx>=0&&items[jDDIdx])jPickTicker(items[jDDIdx].textContent.replace('선물','').trim());return;}
-  else if(e.key==='Escape'){jCloseDD();return;}
-  items.forEach(function(el,i){el.style.background=i===jDDIdx?'rgba(201,168,76,0.12)':'';});
-}
-
-function jReset(){
-  ['j-ticker-input','j-lev','j-eprice','j-xprice','j-size','j-sl','j-tp','j-memo'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
-  var d=document.getElementById('j-dir');if(d)d.value='LONG';
-  var today=new Date().toISOString().split('T')[0];
-  var dt=document.getElementById('j-edate');if(dt)dt.value=today;
-}
-
-async function journalAdd(){
-  var ticker=(document.getElementById('j-ticker-input').value||'').trim().toUpperCase();
-  var direction=document.getElementById('j-dir').value;
-  var leverage=(document.getElementById('j-lev').value||'').trim()||'1x';
-  var entry_date=document.getElementById('j-edate').value;
-  var entry_price=jPN(document.getElementById('j-eprice').value);
-  var exit_price=jPN(document.getElementById('j-xprice').value);
-  var size=jPN(document.getElementById('j-size').value);
-  var stop_loss=jPN(document.getElementById('j-sl').value);
-  var take_profit=jPN(document.getElementById('j-tp').value);
-  var memo=(document.getElementById('j-memo').value||'').trim();
-  if(!ticker){jShowErr('j-add-err','종목을 입력해주세요');return;}
-  if(!entry_price){jShowErr('j-add-err','진입가를 입력해주세요');return;}
-  if(!size){jShowErr('j-add-err','투자금을 입력해주세요');return;}
-  if(!entry_date){jShowErr('j-add-err','진입일을 선택해주세요');return;}
-  try{
-    var res=await fetch(TRADE_API+'/add',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+jToken},body:JSON.stringify({ticker,direction,leverage,entry_date,entry_price,exit_price,size,stop_loss,take_profit,memo})});
-    if(res.status===401){journalLogout();return;}
-    var data=await res.json();
-    if(!res.ok||data.error){jShowErr('j-add-err',data.error||'저장 실패');return;}
-    jReset();await loadJournalTrades();
-  }catch(e){jShowErr('j-add-err','서버 연결 오류');}
+function renderJournalList(){
+  var list=document.getElementById('journal-trade-list');
+  if(!list)return;
+  var search=(document.getElementById('journal-search').value||'').toLowerCase();
+  var items=journalTrades.filter(function(t){
+    if(search&&!(t.ticker||'').toLowerCase().includes(search))return false;
+    if(journalFilter==='open')return t.status==='open';
+    if(journalFilter==='win')return t.status==='closed'&&t.pnl_pct>0;
+    if(journalFilter==='lose')return t.status==='closed'&&t.pnl_pct<=0;
+    return true;
+  });
+  if(items.length===0){list.innerHTML='<div class="journal-empty">해당하는 매매 기록이 없습니다.</div>';return;}
+  var html='';
+  items.forEach(function(t){
+    var isLong=t.direction==='long';
+    var badge=isLong?'<span class="jti-badge-long">LONG</span>':'<span class="jti-badge-short">SHORT</span>';
+    var statusCls=t.status==='open'?'running':(t.pnl_pct>0?'win':'lose');
+    var statusTxt=t.status==='open'?'진행중':(t.pnl_pct>0?'✅ 수익':'❌ 손실');
+    var pnlPct=t.pnl_pct!==null?(t.pnl_pct>=0?'+':'')+t.pnl_pct.toFixed(2)+'%':'—';
+    var pnlPctCls=t.pnl_pct!==null?(t.pnl_pct>0?'up':t.pnl_pct<0?'dn':''):'';
+    var pnlAmt=t.pnl_amount!==null?(t.pnl_amount>=0?'+':'')+t.pnl_amount.toFixed(2)+' USDT':'—';
+    var exitStr=t.exit||'—';
+    html+='<div class="journal-trade-item" id="jti-'+t.id+'">';
+    html+='<div class="jti-top"><div class="jti-left">'+badge+'<div class="jti-ticker">'+(t.ticker||'—')+'</div></div><span class="jti-status '+statusCls+'">'+statusTxt+'</span></div>';
+    html+='<div class="jti-bottom">';
+    html+='<div class="jti-field"><div class="jti-flabel">진입가</div><div class="jti-fval">'+t.entry+'</div></div>';
+    html+='<div class="jti-field"><div class="jti-flabel">청산가</div><div class="jti-fval">'+exitStr+'</div></div>';
+    html+='<div class="jti-field"><div class="jti-flabel">수익률</div><div class="jti-fval '+pnlPctCls+'">'+pnlPct+'</div></div>';
+    html+='</div>';
+    html+='<div class="jti-actions">';
+    if(t.status==='open'){
+      html+='<button class="jti-close-btn" onclick="journalCloseModal('+JSON.stringify(t.id)+')">청산 입력</button>';
+    }
+    html+='<button class="jti-del-btn" onclick="journalDelete('+JSON.stringify(t.id)+')">삭제</button>';
+    html+='</div>';
+    if(t.memo){html+='<div style="font-size:11px;color:var(--text3);margin-top:6px;">📝 '+t.memo+'</div>';}
+    html+='<div style="font-size:10px;color:var(--text3);margin-top:4px;">'+t.date+'</div>';
+    html+='</div>';
+  });
+  list.innerHTML=html;
 }
 
-function jOpenEdit(id){
-  if(!id)return;
-  var t=jAllTrades.find(function(t){return t&&(t.id===id||t._id===id);});
-  if(!t)return;
-  var newExit=prompt('청산가 입력 (현재: '+(t.exit_price||'없음')+')',t.exit_price||'');
-  if(newExit===null)return;
-  jUpdateExit(id,newExit,t);
+function journalCloseModal(id){
+  var exitP=prompt('청산가를 입력하세요 (숫자만):');
+  if(!exitP)return;
+  fetch(TRADE_API+'/update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:journalUser,password:journalPw,id:id,exit:parseFloat(exitP)})})
+    .then(function(r){return r.json();})
+    .then(function(d){if(d.ok){loadJournalTrades();}});
 }
 
-async function jUpdateExit(id,exit_price_str,t){
-  try{
-    var exit_price=jPN(exit_price_str);
-    var res=await fetch(TRADE_API+'/update',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+jToken},body:JSON.stringify({id:id,ticker:t.ticker,direction:t.direction,leverage:t.leverage,entry_date:t.entry_date,entry_price:parseFloat(t.entry_price),exit_price:exit_price,size:parseFloat(t.size),stop_loss:t.stop_loss?parseFloat(t.stop_loss):null,memo:t.memo||''})});
-    if(res.status===401){journalLogout();return;}
-    var data=await res.json();
-    if(!res.ok||data.error){alert(data.error||'수정 실패');return;}
-    await loadJournalTrades();
-  }catch(e){alert('서버 연결 오류');}
+function journalDelete(id){
+  if(!confirm('삭제하시겠습니까?'))return;
+  fetch(TRADE_API+'/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fanding_id:journalUser,password:journalPw,id:id})})
+    .then(function(r){return r.json();})
+    .then(function(d){if(d.ok){journalTrades=journalTrades.filter(function(t){return t.id!==id;});renderJournalStats();renderJournalList();}});
 }
+
 
 // ══ init ══
 initBtcBlur();
